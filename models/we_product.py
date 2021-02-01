@@ -25,4 +25,8 @@ class WeProduct(models.Model):
                 record.current_indice=f'{indice.major}.{indice.minor}'
             else:
                 record.current_indice=''
-    
+    def action_view_indice(self):
+        action = self.env["ir.actions.actions"]._for_xml_id("weOdooProduct.we_indice_action")
+        action['domain'] = [ ('product', 'in', self.ids)]
+        action['context'] = {}
+        return action

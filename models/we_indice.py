@@ -6,7 +6,7 @@ class WeIndice(models.Model):
     _name='we.indice'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Product Erp extensions'
-    
+    _order='date_to desc'
     major=fields.Char('Major',required=True)
     minor=fields.Char('Minor')
     date_from=fields.Date('From',required=True,default=datetime.date.today())
@@ -56,6 +56,8 @@ class WeIndice(models.Model):
 
     @api.onchange('product')
     def _on_product_changed(self):
+        if not self.product.exists():
+            return
         last=self._get_last_indice()
         today=datetime.date.today()
         if last.exists() and not last.date_to:
@@ -74,4 +76,3 @@ class WeIndice(models.Model):
         self._update_last_indices()
         return res
 
-        

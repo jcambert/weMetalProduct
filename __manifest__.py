@@ -22,12 +22,13 @@
 
     # always loaded
     'data': [
-        # 'security/plm_security.xml',
-        # 'security/ir.model.access.csv',
+        'security/we_security.xml',
+        'security/ir.model.access.csv',
         # 'data/ir_cron.xml',
         # 'data/ir_module_category.xml',
         # 'data/mrp_plm_data.xml',
-        # 'views/user.xml',
+        'views/indice_views.xml',
+        'views/product_views.xml',
         
     ],
     'qweb': ['static/src/xml/*.xml'],

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- <record id="module_category_plm" model="ir.module.category" >
+        <field name="name">ERP PLM Managment</field>
+        <field name="description">Category For ERP PLM</field>
+        <field name="sequence">46</field>
+        
+    </record>
+    <record id="group_mrp_plm_user" model="res.groups">
+        <field name="name">ERP PLM / Manager</field>
+        <field name="category_id" ref="module_category_plm"/>
+    </record> -->
+</odoo>

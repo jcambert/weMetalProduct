@@ -1,0 +1,50 @@
+<odoo>
+    <data>
+        <record id="we_indice_list_view" model="ir.ui.view">
+            <field name="name">we.indice.list.view</field>
+            <field name="model">we.indice</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="major" />
+                    <field name="minor"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                </tree>
+            </field>
+        </record>
+        <record id="we_indice_form_view" model="ir.ui.view">
+            <field name="name">we.indice.form.view</field>
+            <field name="model">we.indice</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="product" />
+                            </group>
+                            <group>
+                                <field name="major"/>
+                                <field name="minor"/>
+                            </group>
+                            <group>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                            </group>
+                            <group>
+                                <field name="note" />
+                            </group>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="we_indice_action" model="ir.actions.act_window">
+            <field name="name">Indices</field>
+            <field name="context">{'default_product_id': active_id, 'search_default_product_id': active_id}</field>
+            <field name="res_model">we.indice</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <!-- <menuitem id="menu_we_indice" action="we_indice_action" parent="menu_mrp_plm_configuration" name="Indice" sequence="2"/> -->
+    </data>
+</odoo>
