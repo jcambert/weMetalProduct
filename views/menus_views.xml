@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_we_indice" action="we_indice_action_none" parent="mrp.menu_mrp_bom" name="Indice" sequence="3"/> 
+
+
+</odoo>

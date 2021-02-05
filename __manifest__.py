@@ -29,6 +29,7 @@
         # 'data/mrp_plm_data.xml',
         'views/indice_views.xml',
         'views/product_views.xml',
+        'views/menus_views.xml',
         
     ],
     'qweb': ['static/src/xml/*.xml'],

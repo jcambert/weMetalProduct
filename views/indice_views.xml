@@ -9,7 +9,6 @@
                     <field name="major" />
                     <field name="minor"/>
                     <field name="date_from"/>
-                    <field name="date_to"/>
                     <field name="state" widget="badge" />
                 </tree>
             </field>
@@ -19,10 +18,18 @@
             <field name="model">we.indice</field>
             <field name="arch" type="xml">
                 <form>
+                    <header>
+                        <!-- <field name="create_date" invisible="1"/> -->
+                        <!-- <field name="can_start_indice" invisible="1" /> -->
+                        <field name="state" widget="statusbar" />
+                        <!-- <button string="Start New Indice" name="action_start_indice" type="object" class="oe_highlight" attrs="{'invisible': [('can_start_indice', '=', False)]}"/> -->
+                        <button string="Add Major" name="action_add_major" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'current')]}"/>
+                        <button string="Add Minor" name="action_add_minor" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'current')]}"/>
+                    </header>
                     <sheet>
                         <group>
                             <group>
-                                <field name="product"   domain="[('sale_ok','=',True)]"/>
+                                <field name="product" domain="[('sale_ok','=',True)]"/>
                             </group>
                             <group>
                                 <field name="major"/>
@@ -30,7 +37,6 @@
                             </group>
                             <group>
                                 <field name="date_from"/>
-                                <field name="date_to"/>
                             </group>
                             <group>
                                 <field name="note" />
@@ -47,6 +53,12 @@
             <field name="res_model">we.indice</field>
             <field name="view_mode">tree,form</field>
         </record>
-        <!-- <menuitem id="menu_we_indice" action="we_indice_action" parent="menu_mrp_plm_configuration" name="Indice" sequence="2"/> -->
+        <record id="we_indice_action_none" model="ir.actions.act_window">
+            <field name="name">Indices</field>
+            <field name="context">{}</field>
+            <field name="res_model">we.indice</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
     </data>
 </odoo>
