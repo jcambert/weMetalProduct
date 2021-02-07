@@ -1,6 +1,6 @@
 <odoo>
   <data>
-    <!-- base structure of product.template, common with product.product -->
+
     <record id="weproduct_product_form_view" model="ir.ui.view">
       <field name="name">weOdooProduct.product.form</field>
       <field name="model">product.template</field>
@@ -19,17 +19,35 @@
 
               </div>
             </button>
-
-            <!-- <button class="oe_stat_button" name="action_view_indice" type="object" icon="fa-wrench">
-              <field string="Indice" name="current_indice" widget="statinfo"/>
-            </button> -->
-
-
           </div>
         </data>
       </field>
     </record>
 
+    <record id="weproduct_product_form_sheetmetal_view" model="ir.ui.view">
+      <field name="name">weOdooProduct.product.sheetmetal.form</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <data>
+          <notebook position="inside">
+            <page name="we_product_sheetmetal" string="Sheetmetal">
+              <group>
+                <group name="we_product_sheetmetal_group_general">
+                  <field name="material" />
+                  <field name="sheet_length" />
+                  <field name="sheet_width" />
+                  <field name="sheet_thickness" />
+                  <field name="surface" />
+                  <field name="weight" />
+                </group>
+              </group>
+            </page>
+          </notebook>
+
+        </data>
+      </field>
+    </record>
 
   </data>
 </odoo>

@@ -19,10 +19,7 @@
             <field name="arch" type="xml">
                 <form>
                     <header>
-                        <!-- <field name="create_date" invisible="1"/> -->
-                        <!-- <field name="can_start_indice" invisible="1" /> -->
                         <field name="state" widget="statusbar" />
-                        <!-- <button string="Start New Indice" name="action_start_indice" type="object" class="oe_highlight" attrs="{'invisible': [('can_start_indice', '=', False)]}"/> -->
                         <button string="Add Major" name="action_add_major" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'current')]}"/>
                         <button string="Add Minor" name="action_add_minor" type="object" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'current')]}"/>
                     </header>

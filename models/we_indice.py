@@ -9,8 +9,8 @@ class WeIndice(models.Model):
     _description = 'Product Erp extensions'
     _order='date_from desc'
     _sql_constraints = [
-        ('date_uniq','unique(product_id,date_from)',"There is another indice with this date !"),
-        ('indice_uniq', 'unique (product_id,major,minor)', "Indice Major,Minor already exist !"),
+        ('we_indice_date_uniq','unique(product,date_from)',"There is another indice with this date !"),
+        ('we_indice_version_uniq', 'unique (product,major,minor)', "Indice Major,Minor already exist !"),
     ]
     active = fields.Boolean('Active', default=True,help="If the active field is set to False, it will allow you to hide the indice without removing it.")
     major=fields.Char('Major',required=True)

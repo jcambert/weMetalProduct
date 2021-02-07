@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data >
+        <record forcecreate="True" model="product.category" id="product_category_toute">
+            <field name="name">Toute</field>
+        </record>
+        <record forcecreate="True" model="product.category" id="product_category_vente">
+            <field name="parent_id" ref="product_category_toute"/>
+            <field name="name">Vente</field>
+        </record>
+        <record forcecreate="True" model="product.category" id="product_category_achat">
+            <field name="parent_id" ref="product_category_toute"/>
+            <field name="name">Achat</field>
+        </record>
+        <record forcecreate="True" model="product.category" id="product_category_mp">
+            <field name="parent_id" ref="product_category_achat"/>
+            <field name="name">Matiere Premiere</field>
+        </record>
+        <record forcecreate="True" model="product.category" id="product_category_to">
+            <field name="parent_id" ref="product_category_mp"/>
+            <field name="name">Tole</field>
+        </record>
+        <record forcecreate="True" model="product.category" id="product_category_pr">
+            <field name="parent_id" ref="product_category_mp"/>
+            <field name="name">Profile</field>
+        </record>
+        <record forcecreate="True" model="product.category" id="product_category_pr_turo">
+            <field name="parent_id" ref="product_category_pr"/>
+            <field name="name">Tube Rond</field>
+        </record>
+        <record forcecreate="True" model="product.category" id="product_category_pr_tuca">
+            <field name="parent_id" ref="product_category_pr"/>
+            <field name="name">Tube Carré</field>
+        </record>
+        <record forcecreate="True" model="product.category" id="product_category_pr_ipn">
+            <field name="parent_id" ref="product_category_pr"/>
+            <field name="name">IPN</field>
+        </record>
+        <record forcecreate="True" model="product.category" id="product_category_pr_ipe">
+            <field name="parent_id" ref="product_category_pr"/>
+            <field name="name">IPE</field>
+        </record>
+        <record forcecreate="True" model="product.category" id="product_category_pr_hea">
+            <field name="parent_id" ref="product_category_pr"/>
+            <field name="name">HEA</field>
+        </record>
+        <record forcecreate="True" model="product.category" id="product_category_pr_heb">
+            <field name="parent_id" ref="product_category_pr"/>
+            <field name="name">HEB</field>
+        </record>
+
+
+        <record forcecreate="True" model="res.config.settings" id="we_product_settings">
+            <field name="sheetmetal_category" ref="product_category_to"/>
+            <field name="profile_categories" eval="[(6, 0, [ref('product_category_pr_hea'), ref('product_category_pr_heb'), ref('product_category_pr_ipe'), ref('product_category_pr_ipn'), ref('product_category_pr_tuca'), ref('product_category_pr_turo')])]"/>
+        </record>
+    </data>
+</odoo>

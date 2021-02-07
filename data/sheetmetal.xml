@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data >
+        <record forcecreate="True" model="we.sheetmetal" id="we_sheetmetal_pet">
+            <field name="name">Petit format</field>
+            <field name="length">2000</field>
+            <field name="width">1000</field>
+            <field name="convention">pet$</field>
+        </record>
+        <record forcecreate="True" model="we.sheetmetal" id="we_sheetmetal_moy">
+            <field name="name">Moyen format</field>
+            <field name="length">2500</field>
+            <field name="width">1250</field>
+            <field name="convention">moy$</field>
+        </record>
+        <record forcecreate="True" model="we.sheetmetal" id="we_sheetmetal_gra">
+            <field name="name">Grand format</field>
+            <field name="length">3000</field>
+            <field name="width">1500</field>
+            <field name="convention">gra$</field>
+        </record>
+
+        <record forcecreate="True" model="we.profile.type" id="we_profile_type_upn">
+            <field name="name">UPN</field>
+            <field name="convention" >^(?P&lt;name&gt;UPN)(?P&lt;value&gt;[0-9]*)$</field>
+        </record>
+        <record forcecreate="True" model="we.profile.type" id="we_profile_type_upe">
+            <field name="name">UPE</field>
+            <field name="convention">^(?P&lt;name&gt;UPE)(?P&lt;value&gt;[0-9]*)$</field>
+        </record>
+        <record forcecreate="True" model="we.profile.type" id="we_profile_type_hea">
+            <field name="name">HEA</field>
+            <field name="convention" >^(?P&lt;name&gt;HEA)(?P&lt;value&gt;[0-9]*)$</field>
+        </record>
+        <record forcecreate="True" model="we.profile.type" id="we_profile_type_heb">
+            <field name="name">HEB</field>
+            <field name="convention" >^(?P&lt;name&gt;HEB)(?P&lt;value&gt;[0-9]*)$</field>
+        </record>
+
+        <record forcecreate="True" model="we.profile" id="we_profile_hea_100">
+            <field name="name">100</field>
+            <field name="type_id" ref="we_profile_type_hea"/>
+            <field name="surface_section" >21.2</field>
+            <field name="surface_meter">0.561</field>
+            <field name="weight_meter">17.1</field>
+        </record>
+        <record forcecreate="True" model="we.profile" id="we_profile_hea_120">
+            <field name="name">120</field>
+            <field name="type_id" ref="we_profile_type_hea"/>
+            <field name="surface_section" >25.3</field>
+            <field name="surface_meter">0.677</field>
+            <field name="weight_meter">20.3</field>
+        </record>
+        <record forcecreate="True" model="we.profile" id="we_profile_hea_140">
+            <field name="name">140</field>
+            <field name="type_id" ref="we_profile_type_hea"/>
+            <field name="surface_section" >31.4</field>
+            <field name="surface_meter">0.794</field>
+            <field name="weight_meter">25.2</field>
+        </record>
+    </data>
+</odoo>
