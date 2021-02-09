@@ -6,6 +6,7 @@ class WeSettings(models.TransientModel):
 
     sheetmetal_category=fields.Many2one('product.category',string='Sheetmetal category')
     profile_categories=fields.Many2many('product.category',string='Profiles categories')
+    material_convention
     def set_values(self):
         res=super(WeSettings, self).set_values()
         fn=self.env['ir.config_parameter'].set_param

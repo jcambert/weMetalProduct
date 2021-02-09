@@ -3,3 +3,4 @@
 
 #\\wsl$\docker-desktop-data\version-pack-data\community\docker\volumes\odoo_odoo-web-addons\_data\weaddon>
 from . import models
+from . import helpers

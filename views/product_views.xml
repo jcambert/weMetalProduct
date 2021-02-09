@@ -31,7 +31,8 @@
       <field name="arch" type="xml">
         <data>
           <notebook position="inside">
-            <page name="we_product_sheetmetal" string="Sheetmetal">
+            <field name="is_sheetmetal" invisible="1"/>
+            <page name="we_product_sheetmetal" string="Sheetmetal"   attrs="{'invisible': [('is_sheetmetal', '=', False)]}">
               <group>
                 <group name="we_product_sheetmetal_group_general">
                   <field name="material" />
@@ -49,5 +50,31 @@
       </field>
     </record>
 
+    <record id="weproduct_product_form_profile_view" model="ir.ui.view">
+      <field name="name">weOdooProduct.product.profile.form</field>
+      <field name="model">product.template</field>
+      <field name="inherit_id" ref="product.product_template_form_view"/>
+      <field name="arch" type="xml">
+        <data>
+          <notebook position="inside">
+            <field name="is_profile" invisible="1"/>
+            <page name="we_product_profile" string="Profile"  attrs="{'invisible': [('is_profile', '=', False)]}">
+              <group>
+                <group name="we_product_profile_group_general">
+                  <field name="material" />
+                  <field name="profile_length" />
+                  <field name="profile_surface_section" />
+                  <field name="profile_surface_meter" />
+                  <field name="profile_weight_meter" />
+                  <field name="surface" />
+                  <field name="weight" />
+                </group>
+              </group>
+            </page>
+          </notebook>
+
+        </data>
+      </field>
+    </record>
   </data>
 </odoo>

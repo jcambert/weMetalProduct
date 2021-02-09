@@ -4,14 +4,17 @@
         <record forcecreate="True" model="we.material" id="material_steel">
             <field name="name">Acier</field>
             <field name="volmass">7.8</field>
+            <field name="convention" >["xc10","S235"]</field>
         </record>
         <record forcecreate="True" model="we.material" id="material_stainlesssteel">
             <field name="name">Inox</field>
             <field name="volmass">7.8</field>
+            <field name="convention" ></field>
         </record>
         <record forcecreate="True" model="we.material" id="material_alu">
             <field name="name">Aluminium</field>
             <field name="volmass">2.7</field>
+            <field name="convention" ></field>
         </record>
     </data>
 </odoo>

@@ -5,19 +5,19 @@
             <field name="name">Petit format</field>
             <field name="length">2000</field>
             <field name="width">1000</field>
-            <field name="convention">pet$</field>
+            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;gra)$</field>
         </record>
         <record forcecreate="True" model="we.sheetmetal" id="we_sheetmetal_moy">
             <field name="name">Moyen format</field>
             <field name="length">2500</field>
             <field name="width">1250</field>
-            <field name="convention">moy$</field>
+            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;gra)$</field>
         </record>
         <record forcecreate="True" model="we.sheetmetal" id="we_sheetmetal_gra">
             <field name="name">Grand format</field>
             <field name="length">3000</field>
             <field name="width">1500</field>
-            <field name="convention">gra$</field>
+            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;gra)$</field>
         </record>
 
         <record forcecreate="True" model="we.profile.type" id="we_profile_type_upn">
