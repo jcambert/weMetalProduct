@@ -5,19 +5,19 @@
             <field name="name">Petit format</field>
             <field name="length">2000</field>
             <field name="width">1000</field>
-            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;gra)$</field>
+            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;pet)(+(?P&lt;finition&gt;\w*))*$</field>
         </record>
         <record forcecreate="True" model="we.sheetmetal" id="we_sheetmetal_moy">
             <field name="name">Moyen format</field>
             <field name="length">2500</field>
             <field name="width">1250</field>
-            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;gra)$</field>
+            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;moy)(+(?P&lt;finition&gt;\w*))*$</field>
         </record>
         <record forcecreate="True" model="we.sheetmetal" id="we_sheetmetal_gra">
             <field name="name">Grand format</field>
             <field name="length">3000</field>
             <field name="width">1500</field>
-            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;gra)$</field>
+            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;gra)(+(?P&lt;finition&gt;\w*))*$</field>
         </record>
 
         <record forcecreate="True" model="we.profile.type" id="we_profile_type_upn">
@@ -30,11 +30,18 @@
         </record>
         <record forcecreate="True" model="we.profile.type" id="we_profile_type_hea">
             <field name="name">HEA</field>
+            <field name="default_length">6</field>
             <field name="convention" >^(?P&lt;name&gt;HEA)(?P&lt;value&gt;[0-9]*)$</field>
         </record>
         <record forcecreate="True" model="we.profile.type" id="we_profile_type_heb">
             <field name="name">HEB</field>
             <field name="convention" >^(?P&lt;name&gt;HEB)(?P&lt;value&gt;[0-9]*)$</field>
+        </record>
+
+        <record forcecreate="True" model="we.profile.type" id="we_profile_type_tuca">
+            <field name="name">Tube Carre</field>
+            <field name="default_length">6</field>
+            <field name="convention" >^(?P&lt;name&gt;TUCA*)-(?P&lt;value&gt;[0-9]*)x(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;material&gt;\w+)$</field>
         </record>
 
         <record forcecreate="True" model="we.profile" id="we_profile_hea_100">
@@ -43,6 +50,7 @@
             <field name="surface_section" >21.2</field>
             <field name="surface_meter">0.561</field>
             <field name="weight_meter">17.1</field>
+            
         </record>
         <record forcecreate="True" model="we.profile" id="we_profile_hea_120">
             <field name="name">120</field>

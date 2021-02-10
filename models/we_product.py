@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-
 from odoo import models, fields, api,_
 from odoo.exceptions import AccessError, UserError,ValidationError
 from ast import literal_eval
+import logging
 import re
-# from weOdooProduct.helpers import inlist
+
+_logger = logging.getLogger(__name__)
+
 class WeProfileType(models.Model):
     _name='we.profile.type'
     _description='Standard Profile Type' #UPN HEA ..
@@ -13,6 +15,7 @@ class WeProfileType(models.Model):
         ('name_uniq','unique(name)',"The name of this profile type must be unique"),
     ]
     name=fields.Char('Type',required=True)
+    default_length=fields.Integer('Default length',default=0.0)
     convention=fields.Char('Convention',required=True,help="python regex string convention")
 
 class WeProfile(models.Model):
@@ -23,9 +26,9 @@ class WeProfile(models.Model):
     ]
     name=fields.Char('Name',required=True,index=True)
     type_id=fields.Many2one('we.profile.type','Type',required=True)
-    surface_section=fields.Float('Surface')
-    surface_meter=fields.Float('Surface meter')
-    weight_meter=fields.Float('Weight meter')
+    surface_section=fields.Float('Surface',default=0.0)
+    surface_meter=fields.Float('Surface meter',default=0.0)
+    weight_meter=fields.Float('Weight meter',default=0.0)
 
 class WeSheetmetal(models.Model):
     _name='we.sheetmetal'
@@ -57,7 +60,7 @@ class WeMaterial(models.Model):
     name=fields.Char('Name',required=True)
     volmass=fields.Float('Volumic Mass',required=True,help="in m3/Kg")
     convention=fields.Char('Convention',help="python regex string convention")
-
+    default=fields.Boolean('Default',default=False)
     @api.constrains('volmass')
     def _check_volmass(self):
         for record in self:
@@ -68,23 +71,27 @@ class WeMaterial(models.Model):
 class WeProduct(models.Model):
     _inherit = ['product.template']
     _description = 'Product Erp extensions'
-     
+    _sql_constraints = [
+        ('we_product_name_uniq','unique(name)',"This name already exist !")
+    ]
     indices=fields.One2many('we.indice','product',string="Indice")
     current_indice = fields.Char('Current indice',compute='_compute_current_indice',readonly=True)
     # current_indice=fields.Char('Current indice')
     material = fields.Many2one('we.material','Material')
     
-    is_sheetmetal=fields.Boolean(readonly=True,store=True,compute='_compute_type')
+    # is_sheetmetal=fields.Boolean(readonly=True,store=True,compute='_compute_type')
+    is_sheetmetal=fields.Boolean(readonly=True,store=True)
     sheet_length = fields.Float('Length', digits='Product Unit of Measure', default=0.0)
     sheet_width=fields.Float('Width',digits='Product Unit of Measure', default=0.0)
     sheet_thickness=fields.Float('Thickness',digits='Product Unit of Measure', default=0.0)
 
-    is_profile=fields.Boolean(readonly=True,store=True,compute='_compute_type')
+    # is_profile=fields.Boolean(readonly=True,store=True,compute='_compute_type')
+    is_profile=fields.Boolean(readonly=True,store=True)
     profile_length = fields.Integer('Profile length')
     profile_surface_section = fields.Float('Surface Section', digits='Product Unit of Measure', default=0.0)
     profile_surface_meter = fields.Float('Surface per meter', digits='Product Unit of Measure', default=0.0)
     profile_weight_meter = fields.Float('Weight per meter', digits='Product Unit of Measure', default=0.0)
-
+    profile_thickness = fields.Float('Thickness', digits='Product Unit of Measure', default=0.0,help="thickness for tubes")
     surface=fields.Float('Surface',store=True,readonly=True,compute='_compute_material_values')
     weight=fields.Float('Weight',store=True,readonly=True,compute='_compute_material_values')
 
@@ -97,48 +104,121 @@ class WeProduct(models.Model):
             indice = get_last_indice(record)
             record.current_indice= indice.name() if indice.exists() else ''
 
-    @api.depends('categ_id','name')
+    def _filterByRe(self,*args):
+        if len(args) not in [2,3]:
+            return False
+        convention,name,res=args[0],args[1],args[2] if len(args)==3 else None
+        _logger.debug(f"Filtering: Convention->{convention} , name->{name}")
+        p = re.compile(convention,re.IGNORECASE)
+        m = p.match(name)
+        if m:
+            if res:
+                res.update(m.groupdict())
+            return True
+        return False
+    @api.model
+    def compute_is_sheetmetal(self,sheetmetals,sheetmetal_id,materials,clear_cat=False,clear_name=False):
+        self.ensure_one()
+        if not self.categ_id.id:
+            self.is_sheetmetal=False
+            return
+        self.is_sheetmetal = self.categ_id.id ==  literal_eval( sheetmetal_id) if isinstance(sheetmetal_id,str)  else sheetmetal_id
+        if not self.is_sheetmetal:
+            return
+        
+        # def _filterSheetmetal(*args):
+        #     if  len(args)!=3:
+        #         return False
+        #     print(args)
+        #     print("convention:%s - name:%s"%(args[0].convention,args[1]))
+        #     conv,name,res=args[0],args[1],args[2] 
+        #     p = re.compile(conv.convention,re.IGNORECASE)
+        #     m = p.match(name)
+        #     if m:
+        #         res.update(m.groupdict())
+        #         return True
+        #     return False
+        # def _filterMaterial(*args):
+        #     if len(args)!=2:
+        #         return False
+        #     conv,name=args[0],args[1]
+        #     p = re.compile(conv.convention,re.IGNORECASE)
+        #     m = p.match(name)
+        #     if m:
+        #         return True
+        #     else:
+        #         return False
+        groups={}
+        sheetmetal=sheetmetals.filtered(lambda r:self._filterByRe(r.convention,self.name,groups))
+        # sheetmetal=sheetmetals.filtered(filter)
+        if sheetmetal.exists():
+            if clear_name or clear_cat:
+                self.sheet_length=0
+                self.sheet_width=0
+                self.sheet_thickness=0.0
+            self.sheet_length= self.sheet_length if self.sheet_length>0 else sheetmetal[0].length
+            self.sheet_width= self.sheet_width if self.sheet_width>0 else sheetmetal[0].width
+            if 'name' in groups:
+                material=materials.filtered(lambda r:self._filterByRe(r.convention,groups['name']))
+                if material.exists() :# material.ensure_one():
+                    self.material=material[0]
+            if 'value' in groups:
+                self.sheet_thickness=float(groups['value'])
+
+    @api.model
+    def compute_is_profile(self,profiles,profile_ids,materials,clear_cat=False,clear_name=False):
+        self.ensure_one()
+        if not self.categ_id.id:
+            self.is_profile=False
+            return
+        self.is_profile = self.categ_id.id in literal_eval(profile_ids) if isinstance(profile_ids,str)  else profile_ids
+        if self.is_profile:
+            groups={}
+            profile=profiles.filtered(lambda r:self._filterByRe(r.type_id.convention,self.name,groups))
+            if profile.exists():
+                try:
+                    p = re.compile(profile[0].type_id.convention)
+                    m = p.match(self.name)
+                    value=m.groupdict()['value']
+                    print('value: %s' %(value))
+                    candidate=profile.filtered(lambda r:r.name==value)
+                    if candidate.exists():
+                        self.profile_length=self.profile_length if self.profile_length>0 else profile.type_id.default_length
+                        self.profile_surface_section= self.profile_surface_section if self.profile_surface_section>0 else candidate[0].surface_section
+                        self.profile_surface_meter= self.profile_surface_meter if self.profile_surface_meter>0 else candidate[0].surface_meter 
+                        self.profile_weight_meter=self.profile_weight_meter if self.profile_weight_meter>0 else candidate[0].weight_meter
+                        # record.material set to acier
+                    if 'material' in groups:
+                        material=materials.filtered(lambda r:self._filterByRe(r.convention,groups['name']))
+                        if material.exists() :
+                            self.material=material[0]
+                    else:
+                        material=materials.filtered(lambda r:r.default)
+                        if material.exists() :
+                            self.material=material[0]
+
+                    if 'thickness' in groups:
+                        self.profile_thickness=float(groups['thickness'])
+                except:
+                    raise
+                    # pass
+                
+    @api.onchange('categ_id','name')
     def _compute_type(self):
         sheetmetal_id = self.env['ir.config_parameter'].get_param('weOdooProduct.sheetmetal_category') or False
         profile_ids = self.env['ir.config_parameter'].get_param('weOdooProduct.profile_categories') or []
         sheetmetals=self.env['we.sheetmetal'].search([])
         profiles=self.env['we.profile'].search([])
-
-        def _compute_sheetmetal(record):
-            if not record.is_sheetmetal:
-                return
-            sheetmetal=sheetmetals.filtered(lambda r:re.search(r.convention, record.name, re.IGNORECASE))
-            if sheetmetal.exists():
-                record.sheet_length= record.sheet_length if record.sheet_length>0 else sheetmetal[0].length
-                record.sheet_width= record.sheet_width if record.sheet_width>0 else sheetmetal[0].width
-
-        def _compute_profile(record):
-            if not record.is_profile:
-                return
-            profile=profiles.filtered(lambda r:re.search(r.type_id.convention,record.name,re.IGNORECASE))
-            if profile.exists():
-                try:
-                    p = re.compile(profile[0].type_id.convention)
-                    m = p.match(record.name)
-                    value=m.groupdict()['value']
-                    # name=m.groupdict['name']
-                    print('value: %s' %(value))
-                    candidate=profile.filtered(lambda r:r.name==value)
-                    if candidate.exists():
-                        record.profile_surface_section= record.profile_surface_section if record.profile_surface_section>0 else candidate[0].surface_section
-                        record.profile_surface_meter= record.profile_surface_meter if record.profile_surface_meter>0 else candidate[0].surface_meter 
-                        record.profile_weight_meter=record.profile_weight_meter if record.profile_weight_meter>0 else candidate[0].weight_meter
-                        # record.material set to acier
-                except:
-                    pass
+        materials=self.env['we.material'].search([])
+        clear_product_on_category_change=self.env['ir.config_parameter'].get_param('weOdooProduct.clear_product_on_category_change')
+        clear_product_on_name_change=self.env['ir.config_parameter'].get_param('weOdooProduct.clear_product_on_name_change')
 
         for record in self:
-            record.is_sheetmetal = record.categ_id.id ==  literal_eval( sheetmetal_id) if isinstance(sheetmetal_id,str)  else sheetmetal_id
-            _compute_sheetmetal(record)
-            if not record.is_sheetmetal:
-                record.is_profile = record.categ_id.id in literal_eval(profile_ids) if isinstance(sheetmetal_id,str)  else sheetmetal_id
-                _compute_profile(record)
-
+            clear_cat=clear_product_on_category_change and record.categ_id.id!=record._origin.categ_id.id
+            clear_name=clear_product_on_name_change and record.name!=record._origin.name
+            record.compute_is_sheetmetal(sheetmetals,sheetmetal_id,materials,clear_cat,clear_name)
+            record.compute_is_profile(profiles,profile_ids,materials,clear_cat,clear_name)
+            
     @api.depends('sheet_width','sheet_length','sheet_thickness','material','profile_surface_meter','profile_weight_meter','profile_length')
     def _compute_material_values(self):
         for record in self:
@@ -177,11 +257,8 @@ class WeProduct(models.Model):
 
     @api.constrains('profile_length')
     def _check_profile_length(self):
-        for record in self:
-            if not record.is_profile:
-                continue
-            if record and record.profile_length<=0:
-                raise ValidationError(_('Profile length must be greater than 0'))
+        if any( record.is_profile and record.profile<=0 for record in self):
+            raise ValidationError(_('Profile length must be greater than 0'))
             
 
 

@@ -33,6 +33,8 @@
         'data/settings.xml',
         'views/indice_views.xml',
         'views/product_views.xml',
+        'views/sheetmetal_views.xml',
+        'views/profile_views.xml',
         'views/menus_views.xml',
         'views/res_config_settings_view.xml',
         
