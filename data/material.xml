@@ -4,18 +4,18 @@
         <record forcecreate="True" model="we.material" id="material_steel">
             <field name="name">Acier</field>
             <field name="volmass">7.8</field>
-            <field name="convention" >^(?P&lt;name&gt;(s|e)[0-9]{3}|(dc|dd|xc)[0-9]{2}|dx51d)$</field>
+            <field name="convention" >^(?P&lt;name&gt;(s|e)[0-9]{3}|(dc|dd|xc)[0-9]{2}|dx51d)|(ac)$</field>
             <field name="default" >1</field>
         </record>
         <record forcecreate="True" model="we.material" id="material_stainlesssteel">
             <field name="name">Inox</field>
             <field name="volmass">7.8</field>
-            <field name="convention" >^(?P&lt;name&gt;[0-9]{3}[l]{0,1})$</field>
+            <field name="convention" >^(?P&lt;name&gt;([0-9]{3}[l]{0,1})|(in))$</field>
         </record>
         <record forcecreate="True" model="we.material" id="material_alu">
             <field name="name">Aluminium</field>
             <field name="volmass">2.7</field>
-            <field name="convention">^(?P&lt;name&gt;[0-9]{4})$</field>
+            <field name="convention">^(?P&lt;name&gt;[0-9]{4}|(ag))$</field>
         </record>
         <record forcecreate="True" model="we.material" id="material_cuivre">
             <field name="name">Cuivre</field>

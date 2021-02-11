@@ -59,7 +59,8 @@
         <data>
           <notebook position="inside">
             <field name="is_profile" invisible="1"/>
-            <page name="we_product_profile" string="Profile"  attrs="{'invisible': [('is_profile', '=', False)]}">
+            <!-- <page name="we_product_profile" string="Profile"  attrs="{'invisible': [('is_profile', '=', False)]}"> -->
+            <page name="we_product_profile" string="Profile" >
               <group>
                 <group name="we_product_profile_group_general">
                   <field name="material" />
@@ -67,6 +68,7 @@
                   <field name="profile_surface_section" />
                   <field name="profile_surface_meter" />
                   <field name="profile_weight_meter" />
+                  <field name="profile_thickness" />
                   <field name="surface" />
                   <field name="weight" />
                 </group>

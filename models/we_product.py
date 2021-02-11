@@ -4,7 +4,7 @@ from odoo.exceptions import AccessError, UserError,ValidationError
 from ast import literal_eval
 import logging
 import re
-
+import math
 _logger = logging.getLogger(__name__)
 
 class WeProfileType(models.Model):
@@ -17,6 +17,8 @@ class WeProfileType(models.Model):
     name=fields.Char('Type',required=True)
     default_length=fields.Integer('Default length',default=0.0)
     convention=fields.Char('Convention',required=True,help="python regex string convention")
+    calculate_surface_section=fields.Char('Surface section formula',default='')
+    calculate_surface_meter=fields.Char('Surface meter formula',default='')
 
 class WeProfile(models.Model):
     _name='we.profile'
@@ -108,11 +110,13 @@ class WeProduct(models.Model):
         if len(args) not in [2,3]:
             return False
         convention,name,res=args[0],args[1],args[2] if len(args)==3 else None
-        _logger.debug(f"Filtering: Convention->{convention} , name->{name}")
+        if(len(convention)==0 or len(name)==0):
+            return False
+        _logger.info(f"Filtering: Convention->{convention} , name->{name}")
         p = re.compile(convention,re.IGNORECASE)
         m = p.match(name)
         if m:
-            if res:
+            if isinstance(res,dict):
                 res.update(m.groupdict())
             return True
         return False
@@ -126,31 +130,10 @@ class WeProduct(models.Model):
         if not self.is_sheetmetal:
             return
         
-        # def _filterSheetmetal(*args):
-        #     if  len(args)!=3:
-        #         return False
-        #     print(args)
-        #     print("convention:%s - name:%s"%(args[0].convention,args[1]))
-        #     conv,name,res=args[0],args[1],args[2] 
-        #     p = re.compile(conv.convention,re.IGNORECASE)
-        #     m = p.match(name)
-        #     if m:
-        #         res.update(m.groupdict())
-        #         return True
-        #     return False
-        # def _filterMaterial(*args):
-        #     if len(args)!=2:
-        #         return False
-        #     conv,name=args[0],args[1]
-        #     p = re.compile(conv.convention,re.IGNORECASE)
-        #     m = p.match(name)
-        #     if m:
-        #         return True
-        #     else:
-        #         return False
+        
         groups={}
         sheetmetal=sheetmetals.filtered(lambda r:self._filterByRe(r.convention,self.name,groups))
-        # sheetmetal=sheetmetals.filtered(filter)
+        
         if sheetmetal.exists():
             if clear_name or clear_cat:
                 self.sheet_length=0
@@ -166,7 +149,7 @@ class WeProduct(models.Model):
                 self.sheet_thickness=float(groups['value'])
 
     @api.model
-    def compute_is_profile(self,profiles,profile_ids,materials,clear_cat=False,clear_name=False):
+    def compute_is_profile(self,profiles,profile_ids,profile_types,materials,clear_cat=False,clear_name=False):
         self.ensure_one()
         if not self.categ_id.id:
             self.is_profile=False
@@ -189,7 +172,7 @@ class WeProduct(models.Model):
                         self.profile_weight_meter=self.profile_weight_meter if self.profile_weight_meter>0 else candidate[0].weight_meter
                         # record.material set to acier
                     if 'material' in groups:
-                        material=materials.filtered(lambda r:self._filterByRe(r.convention,groups['name']))
+                        material=materials.filtered(lambda r:self._filterByRe(r.convention,groups['material']))
                         if material.exists() :
                             self.material=material[0]
                     else:
@@ -202,13 +185,48 @@ class WeProduct(models.Model):
                 except:
                     raise
                     # pass
-                
+            # non standard declined profile
+            else:
+                groups={}
+                profile=profile_types.filtered(lambda r:self._filterByRe(r.convention,self.name,groups))
+                if profile.exists() and profile.ensure_one():
+                    thickness=0.0
+                    if clear_name or clear_cat:
+                        pass
+                    self.profile_length=int(profile.default_length)
+                    if 'thickness' in groups:
+                        thickness=self.profile_thickness=float(groups['thickness'])
+                    if 'material' in groups:
+                        material=materials.filtered(lambda r:self._filterByRe(r.convention,groups['material']))
+                        if material.exists() :
+                            self.material=material[0]
+                    else:
+                        material=materials.filtered(lambda r:r.default)
+                        if material.exists() :
+                            self.material=material[0]
+                    if len(profile.calculate_surface_section)>0:
+                        try:
+                            code=compile(profile.calculate_surface_section, "<string>", "eval")
+                            self.surface_section=float(eval(code))
+                        except:
+                            raise
+                    if len(profile.calculate_surface_meter)>0:
+                        try:
+                            code=compile(profile.calculate_surface_meter, "<string>", "eval")
+                            self.surface_meter=float(eval(code))
+                        except:
+                            raise
+                    
+
+
     @api.onchange('categ_id','name')
     def _compute_type(self):
         sheetmetal_id = self.env['ir.config_parameter'].get_param('weOdooProduct.sheetmetal_category') or False
         profile_ids = self.env['ir.config_parameter'].get_param('weOdooProduct.profile_categories') or []
         sheetmetals=self.env['we.sheetmetal'].search([])
+        profile_types=self.env['we.profile.type'].search([])
         profiles=self.env['we.profile'].search([])
+
         materials=self.env['we.material'].search([])
         clear_product_on_category_change=self.env['ir.config_parameter'].get_param('weOdooProduct.clear_product_on_category_change')
         clear_product_on_name_change=self.env['ir.config_parameter'].get_param('weOdooProduct.clear_product_on_name_change')
@@ -217,7 +235,7 @@ class WeProduct(models.Model):
             clear_cat=clear_product_on_category_change and record.categ_id.id!=record._origin.categ_id.id
             clear_name=clear_product_on_name_change and record.name!=record._origin.name
             record.compute_is_sheetmetal(sheetmetals,sheetmetal_id,materials,clear_cat,clear_name)
-            record.compute_is_profile(profiles,profile_ids,materials,clear_cat,clear_name)
+            record.compute_is_profile(profiles,profile_ids,profile_types,materials,clear_cat,clear_name)
             
     @api.depends('sheet_width','sheet_length','sheet_thickness','material','profile_surface_meter','profile_weight_meter','profile_length')
     def _compute_material_values(self):

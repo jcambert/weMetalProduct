@@ -5,19 +5,19 @@
             <field name="name">Petit format</field>
             <field name="length">2000</field>
             <field name="width">1000</field>
-            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;pet)(+(?P&lt;finition&gt;\w*))*$</field>
+            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;pet)(\+(?P&lt;finition&gt;\w*))*$</field>
         </record>
         <record forcecreate="True" model="we.sheetmetal" id="we_sheetmetal_moy">
             <field name="name">Moyen format</field>
             <field name="length">2500</field>
             <field name="width">1250</field>
-            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;moy)(+(?P&lt;finition&gt;\w*))*$</field>
+            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;moy)(\+(?P&lt;finition&gt;\w*))*$</field>
         </record>
         <record forcecreate="True" model="we.sheetmetal" id="we_sheetmetal_gra">
             <field name="name">Grand format</field>
             <field name="length">3000</field>
             <field name="width">1500</field>
-            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;gra)(+(?P&lt;finition&gt;\w*))*$</field>
+            <field name="convention">^(?P&lt;name&gt;\w*)-(?P&lt;value&gt;[0-9\.]*)(?P&lt;format&gt;gra)(\+(?P&lt;finition&gt;\w*))*$</field>
         </record>
 
         <record forcecreate="True" model="we.profile.type" id="we_profile_type_upn">
@@ -41,7 +41,15 @@
         <record forcecreate="True" model="we.profile.type" id="we_profile_type_tuca">
             <field name="name">Tube Carre</field>
             <field name="default_length">6</field>
-            <field name="convention" >^(?P&lt;name&gt;TUCA*)-(?P&lt;value&gt;[0-9]*)x(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;material&gt;\w+)$</field>
+            <field name="convention" >^(?P&lt;name&gt;TUCA*)-(?P&lt;value&gt;[0-9]*)x(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;material&gt;[a-z]*)$</field>
+        </record>
+
+        <record forcecreate="True" model="we.profile.type" id="we_profile_type_turo">
+            <field name="name">Tube Rond</field>
+            <field name="default_length">6</field>
+            <field name="convention" >^(?P&lt;name&gt;TURO*)-(?P&lt;value&gt;[0-9]*)x(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;material&gt;[a-z]*)$</field>
+            <field name="calculate_surface_section">math.pi*math.pow(value/2,2)-math.pi*math.pow((value-2*thickness)/2,2)</field>
+            <field name="calculate_surface_meter" >math.pi*value</field>
         </record>
 
         <record forcecreate="True" model="we.profile" id="we_profile_hea_100">
