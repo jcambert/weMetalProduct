@@ -21,7 +21,7 @@
                     <header>
                     </header>
                     <sheet>
-                        <group>
+                        <group >
                             <group>
                                 <field name="name"/>
                                 <field name="type_id" />

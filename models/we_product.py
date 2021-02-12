@@ -82,20 +82,22 @@ class WeProduct(models.Model):
     material = fields.Many2one('we.material','Material')
     
     # is_sheetmetal=fields.Boolean(readonly=True,store=True,compute='_compute_type')
-    is_sheetmetal=fields.Boolean(readonly=True,store=True)
+    is_sheetmetal=fields.Boolean(store=True)
     sheet_length = fields.Float('Length', digits='Product Unit of Measure', default=0.0)
     sheet_width=fields.Float('Width',digits='Product Unit of Measure', default=0.0)
     sheet_thickness=fields.Float('Thickness',digits='Product Unit of Measure', default=0.0)
 
     # is_profile=fields.Boolean(readonly=True,store=True,compute='_compute_type')
-    is_profile=fields.Boolean(readonly=True,store=True)
+    is_profile=fields.Boolean(store=True)
+    is_predefined_profile=fields.Boolean(store=True)
     profile_length = fields.Integer('Profile length')
     profile_surface_section = fields.Float('Surface Section', digits='Product Unit of Measure', default=0.0)
     profile_surface_meter = fields.Float('Surface per meter', digits='Product Unit of Measure', default=0.0)
     profile_weight_meter = fields.Float('Weight per meter', digits='Product Unit of Measure', default=0.0)
     profile_thickness = fields.Float('Thickness', digits='Product Unit of Measure', default=0.0,help="thickness for tubes")
-    surface=fields.Float('Surface',store=True,readonly=True,compute='_compute_material_values')
-    weight=fields.Float('Weight',store=True,readonly=True,compute='_compute_material_values')
+
+    surface=fields.Float('Surface',compute='_compute_material_values', digits='Product Unit of Measure',default=0.0)
+    weight=fields.Float('Weight',compute='_compute_material_values', digits='Product Unit of Measure',default=0.0)
 
     @api.depends('indices.is_enable')
     def _compute_current_indice(self):
@@ -159,6 +161,7 @@ class WeProduct(models.Model):
             groups={}
             profile=profiles.filtered(lambda r:self._filterByRe(r.type_id.convention,self.name,groups))
             if profile.exists():
+                self.is_predefined_profile=True
                 try:
                     p = re.compile(profile[0].type_id.convention)
                     m = p.match(self.name)
@@ -187,15 +190,21 @@ class WeProduct(models.Model):
                     # pass
             # non standard declined profile
             else:
+                self.is_predefined_profile=False
                 groups={}
                 profile=profile_types.filtered(lambda r:self._filterByRe(r.convention,self.name,groups))
                 if profile.exists() and profile.ensure_one():
                     thickness=0.0
+                    value=0
                     if clear_name or clear_cat:
-                        pass
-                    self.profile_length=int(profile.default_length)
+                        self.profile_length=0
+                        self.profile_thickness=0
+                        
+                    self.profile_length= self.profile_length if self.profile_length>0 else int(profile.default_length)
+                    if 'value' in groups:
+                        value=int(groups['value'])
                     if 'thickness' in groups:
-                        thickness=self.profile_thickness=float(groups['thickness'])
+                        thickness=self.profile_thickness= self.profile_thickness if self.profile_thickness>0 else float(groups['thickness'])
                     if 'material' in groups:
                         material=materials.filtered(lambda r:self._filterByRe(r.convention,groups['material']))
                         if material.exists() :
@@ -204,22 +213,47 @@ class WeProduct(models.Model):
                         material=materials.filtered(lambda r:r.default)
                         if material.exists() :
                             self.material=material[0]
-                    if len(profile.calculate_surface_section)>0:
-                        try:
-                            code=compile(profile.calculate_surface_section, "<string>", "eval")
-                            self.surface_section=float(eval(code))
-                        except:
-                            raise
-                    if len(profile.calculate_surface_meter)>0:
-                        try:
-                            code=compile(profile.calculate_surface_meter, "<string>", "eval")
-                            self.surface_meter=float(eval(code))
-                        except:
-                            raise
-                    
+                    self._update_non_standard_profile_values(profile)
+                    # if len(profile.calculate_surface_section)>0:
+                    #     try:
+                    #         code=compile(profile.calculate_surface_section, "<string>", "eval")
+                    #         self.profile_surface_section=float(eval(code))
+                    #     except:
+                    #         raise
+                    # if len(profile.calculate_surface_meter)>0:
+                    #     try:
+                    #         code=compile(profile.calculate_surface_meter, "<string>", "eval")
+                    #         self.profile_surface_meter=float(eval(code))
+                    #     except:
+                    #         raise
+                    # self.profile_weight_meter=self.profile_surface_section*self.material.volmass
 
+    @api.onchange('profile_thickness')
+    def _on_profile_thickness_changed(self):
+        self.ensure_one()
+        if self.is_predefined_profile:
+            return
+        profile_types=self.env['we.profile.type'].search([])
+        profile=profile_types.filtered(lambda r:self._filterByRe(r.convention,self.name))
+        if profile.ensure_one():
+            self._update_non_standard_profile_values(profile)
+        
+    def _update_non_standard_profile_values(self,profile):
+        if len(profile.calculate_surface_section)>0:
+            try:
+                code=compile(profile.calculate_surface_section, "<string>", "eval")
+                self.profile_surface_section=float(eval(code))
+            except:
+                raise
+        if len(profile.calculate_surface_meter)>0:
+            try:
+                code=compile(profile.calculate_surface_meter, "<string>", "eval")
+                self.profile_surface_meter=float(eval(code))
+            except:
+                raise
+        self.profile_weight_meter=self.profile_surface_section*self.material.volmass
 
-    @api.onchange('categ_id','name')
+    @api.onchange('categ_id','name','profile_thickness')
     def _compute_type(self):
         sheetmetal_id = self.env['ir.config_parameter'].get_param('weOdooProduct.sheetmetal_category') or False
         profile_ids = self.env['ir.config_parameter'].get_param('weOdooProduct.profile_categories') or []
@@ -248,7 +282,9 @@ class WeProduct(models.Model):
             elif record.is_profile:
                 record.surface=record.profile_surface_meter*record.profile_length
                 record.weight=record.profile_weight_meter*record.profile_length
-
+            else:
+                record.surface=0.0
+                record.weight=0.0
     @api.constrains('sheet_width')
     def _check_sheetmetal_width(self):
         for record in self:
