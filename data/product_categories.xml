@@ -32,6 +32,10 @@
             <field name="parent_id" ref="product_category_pr"/>
             <field name="name">Tube Carré</field>
         </record>
+        <record forcecreate="True" model="product.category" id="product_category_pr_ture">
+            <field name="parent_id" ref="product_category_pr"/>
+            <field name="name">Tube Rect</field>
+        </record>
         <record forcecreate="True" model="product.category" id="product_category_pr_ipn">
             <field name="parent_id" ref="product_category_pr"/>
             <field name="name">IPN</field>
@@ -50,9 +54,6 @@
         </record>
 
 
-        <record forcecreate="True" model="res.config.settings" id="we_product_settings">
-            <field name="sheetmetal_category" ref="product_category_to"/>
-            <field name="profile_categories" eval="[(6, 0, [ref('product_category_pr_hea'), ref('product_category_pr_heb'), ref('product_category_pr_ipe'), ref('product_category_pr_ipn'), ref('product_category_pr_tuca'), ref('product_category_pr_turo')])]"/>
-        </record>
+        
     </data>
 </odoo>

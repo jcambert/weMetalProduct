@@ -78,8 +78,35 @@
                                 </div>
                             </div>
                         </div>
+                        <h2>Configuration</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-12 col-lg-6 o_setting_box ">
+                                <div class="o_setting_left_pane">
+                                    <field name="product_name_force_uppercase" class="o_light_label"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="product_name_force_uppercase"/>
+                                    <div class="text-muted">
+                                        Forcer le mode majuscule sur le nom des produits
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box ">
+                                <div class="o_setting_left_pane">
+                                    <field name="indice_for_purchased" class="o_light_label"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="indice_for_purchased"/>
+                                    <div class="text-muted">
+                                        Indice autorisé pour les articles achetés
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                         <h2>Evenement sur articles</h2>
-                        <div class="row mt16 o_settings_container" name="managa_mail_campaigns_setting_container">
+                        <div class="row mt16 o_settings_container">
                             <div class="col-12 col-lg-6 o_setting_box ">
                                 <div class="o_setting_left_pane">
                                     <field name="clear_product_on_category_change" class="o_light_label"/>
