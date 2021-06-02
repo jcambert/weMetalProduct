@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "We Addon Product",
+    'name': "Metal Product Extension",
 
     'summary': """
         Extension Addon that evolve product""",
@@ -9,7 +9,7 @@
         Addon Product
     """,
 
-    'author': "We",
+    'author': "AMBERT Jean-Christophe",
     'website': "http://jc.ambert.free.fr",
 
     # Categories can be used to filter modules in modules listing
@@ -31,6 +31,7 @@
         'data/materials.xml',
         'data/profiles.xml',
         'data/settings.xml',
+        'data/product_attribute.xml',
         'views/indice_views.xml',
         'views/product_views.xml',
         'views/material_views.xml',

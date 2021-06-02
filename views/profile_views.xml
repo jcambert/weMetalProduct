@@ -1,7 +1,7 @@
 <odoo>
     <data>
         <record id="we_product_profile_list_view" model="ir.ui.view">
-            <field name="name">weOdooProduct.profile.list.view</field>
+            <field name="name">weMetalProduct.profile.list.view</field>
             <field name="model">we.profile</field>
             <field name="arch" type="xml">
                 <tree>
@@ -14,7 +14,7 @@
             </field>
         </record>
         <record id="we_product_profile_form_view" model="ir.ui.view">
-            <field name="name">weOdooProduct.profile.form.view</field>
+            <field name="name">weMetalProduct.profile.form.view</field>
             <field name="model">we.profile</field>
             <field name="arch" type="xml">
                 <form>

@@ -44,7 +44,7 @@ class WeProduct(models.Model):
     @api.onchange('name')
     def set_upper(self):    
         if isinstance(self.name,str):
-            force=self.env['ir.config_parameter'].get_param('weOdooProduct.product_name_force_uppercase')
+            force=self.env['ir.config_parameter'].get_param('weMetalProduct.product_name_force_uppercase')
             self.name = str(self.name).upper() if force else str(self.name)
         return
 
@@ -204,15 +204,15 @@ class WeProduct(models.Model):
 
     @api.onchange('categ_id','name')
     def _compute_type(self):
-        sheetmetal_id = self.env['ir.config_parameter'].get_param('weOdooProduct.sheetmetal_category') or False
-        profile_ids = self.env['ir.config_parameter'].get_param('weOdooProduct.profile_categories') or []
+        sheetmetal_id = self.env['ir.config_parameter'].get_param('weMetalProduct.sheetmetal_category') or False
+        profile_ids = self.env['ir.config_parameter'].get_param('weMetalProduct.profile_categories') or []
         # sheetmetals=self.env['we.sheetmetal'].search([])
         profile_types=self.env['we.profile.type'].search([])
         profiles=self.env['we.profile'].search([])
 
         materials=self.env['we.material'].search([])
-        clear_product_on_category_change=self.env['ir.config_parameter'].get_param('weOdooProduct.clear_product_on_category_change')
-        clear_product_on_name_change=self.env['ir.config_parameter'].get_param('weOdooProduct.clear_product_on_name_change')
+        clear_product_on_category_change=self.env['ir.config_parameter'].get_param('weMetalProduct.clear_product_on_category_change')
+        clear_product_on_name_change=self.env['ir.config_parameter'].get_param('weMetalProduct.clear_product_on_name_change')
 
         for record in self:
             clear_cat=clear_product_on_category_change and record.categ_id.id!=record._origin.categ_id.id
@@ -263,7 +263,7 @@ class WeProduct(models.Model):
 
 
     def action_view_indice(self):
-        action = self.env["ir.actions.actions"]._for_xml_id("weOdooProduct.we_indice_action")
+        action = self.env["ir.actions.actions"]._for_xml_id("weMetalProduct.we_indice_action")
         action['domain'] = [ ('product', 'in', self.ids)]
         action['context'] = {}
         return action

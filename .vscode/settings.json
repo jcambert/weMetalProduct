@@ -1,13 +1,14 @@
 {
     "editor.fontSize": 24,
     "terminal.integrated.fontFamily": "Cascadia Code PL",
-    "python.autoComplete.extraPaths": [
-        "${workspaceRoot}/../odoo/addons",
-        "${workspaceRoot}/../odoo",
-        "${workspaceRoot}/../odoo/extra-addons" ,
-        "/mnt/c/Users/jc.ambert/odoo",
-        "/mnt/c/Users/jc.ambert/odoo/addons",
-        "/mnt/c/Users/jc.ambert/odoo/extra-addons"
+    "editor.rulers": [80, 120],
+    "window.zoomLevel": 0.1,
+    "python.pythonPath": "/bin/python3",
+    "python.languageServer": "Pylance",
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.extraPaths": [
+        "/mnt/c/Users/jcamb/odoo/odoo/"
     ],
     "python.linting.enabled": true,
     "files.autoSave": "afterDelay",
@@ -20,12 +21,5 @@
         "**/.DS_Store": true,
         "**/.pyc":true
     },
-    "python.analysis.extraPaths": [
-        "${workspaceRoot}/../odoo/addons",
-        "${workspaceRoot}/../odoo",
-        "${workspaceRoot}/../odoo/extra-addons",
-        "/mnt/c/Users/jc.ambert/odoo",
-        "/mnt/c/Users/jc.ambert/odoo/addons",
-        "/mnt/c/Users/jc.ambert/odoo/extra-addons"
-    ]
+    
 }

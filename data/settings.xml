@@ -2,7 +2,7 @@
 <odoo>
     <data >
         <record forcecreate="True" model="res.config.settings" id="we_product_settings">
-            <field name="sheetmetal_category" ref="weOdooProduct.product_category_to"/>
+            <field name="sheetmetal_category" ref="weMetalProduct.product_category_to"/>
             <field name="product_name_force_uppercase">True</field>
             <!-- <field name="profile_categories" eval="[(6, 0, [ref('product_category_pr_hea'), ref('product_category_pr_heb'), ref('product_category_pr_ipe'), ref('product_category_pr_ipn'), ref('product_category_pr_tuca'), ref('product_category_pr_turo')])]"/> -->
         </record>

@@ -135,12 +135,12 @@ class WeIndice(models.Model):
     #     return res
 
     def _action_follow(self,record):
-        action = self.env["ir.actions.actions"]._for_xml_id("weOdooProduct.we_indice_action_none")
+        action = self.env["ir.actions.actions"]._for_xml_id("weMetalProduct.we_indice_action_none")
 
         # action['context'] = {'id':record.id}
         action['res_id'] =record.id
         # action['view_mode']='form'
-        action['views'] = [(self.env.ref('weOdooProduct.we_indice_form_view').id, 'form')]
+        action['views'] = [(self.env.ref('weMetalProduct.we_indice_form_view').id, 'form')]
         return action
     def _increment_int_value(self,value,step):
         return int(value)+step

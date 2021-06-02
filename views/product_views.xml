@@ -2,7 +2,7 @@
   <data>
 
     <record id="weproduct_product_form_view" model="ir.ui.view">
-      <field name="name">weOdooProduct.product.form</field>
+      <field name="name">weMetalProduct.product.form</field>
       <field name="model">product.template</field>
       <field name="inherit_id" ref="product.product_template_form_view"/>
       <field name="arch" type="xml">
@@ -27,7 +27,7 @@
   
 
     <record id="weproduct_product_form_profile_view" model="ir.ui.view">
-      <field name="name">weOdooProduct.product.profile.form</field>
+      <field name="name">weMetalProduct.product.profile.form</field>
       <field name="model">product.template</field>
       <field name="inherit_id" ref="product.product_template_form_view"/>
       <field name="arch" type="xml">

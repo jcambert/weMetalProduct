@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- <data> -->
+        <record model="product.attribute" id="product_attribute_dimension_tole">
+            <field name="name">Dimension Tole</field>
+            <field name="display_type">dimension</field>
+            <field name="uom_id" ref="uom.uom_categ_length"></field>
+        </record>
+        <record model="product.attribute.value" id="product_attribute_dimension_tole_xs">
+            <field name="attribute_id" ref="product_attribute_dimension_tole"/>
+            <field name="name">Petit Format</field>
+            <field name="length">2000</field>
+            <field name="width">1000</field>
+        </record>
+        <record model="product.attribute.value" id="product_attribute_dimension_tole_md">
+            <field name="attribute_id" ref="product_attribute_dimension_tole"/>
+            <field name="name">Moyen Format</field>
+            <field name="length">2500</field>
+            <field name="width">1250</field>
+        </record>
+        <record model="product.attribute.value" id="product_attribute_dimension_tole_xl">
+            <field name="attribute_id" ref="product_attribute_dimension_tole"/>
+            <field name="name">Grand Format</field>
+            <field name="length">3000</field>
+            <field name="width">1500</field>
+        </record>
+    </data>
+</odoo>
