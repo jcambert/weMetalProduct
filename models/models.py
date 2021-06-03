@@ -1,7 +1,7 @@
 from odoo import models, fields, api,_
 from ast import literal_eval as _literal_eval
 from . import models as _inner_models
-from .we_settings import UOM_SURFACE,UOM_WEIGHT,UOM_LENGTH,UOM_VOLUMIC_MASS
+from .we_settings import SHEETMETAL_CATEGORY, UOM_SURFACE,UOM_WEIGHT,UOM_LENGTH,UOM_VOLUMIC_MASS
 import logging
 import re
 import math

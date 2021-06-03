@@ -5,7 +5,7 @@ from odoo.exceptions import AccessError, UserError,ValidationError
 
 class WeIndice(models.Model):
     _name='we.indice'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    # _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Product Erp extensions'
     _order='date_from desc'
     _sql_constraints = [

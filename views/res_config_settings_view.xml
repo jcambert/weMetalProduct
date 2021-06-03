@@ -40,39 +40,147 @@
 
                             <div class="col-12 col-lg-6 o_setting_box ">
                                 <div class="o_setting_right_pane">
-                                    <label for="material_convention_names"/>
+                                    <label for="component_category"/>
                                     <div class="text-muted">
-                                        Material convention names
+                                        Component Category
                                     </div>
                                     <div class="content-group">
                                         <div class="mt16">
-                                            <field name="material_convention_names" class="o_light_label" widget="many2many_tags"/>
+                                            <field name="component_category" class="o_light_label"/>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6 o_setting_box ">
                                 <div class="o_setting_right_pane">
-                                    <label for="sheetmetal_convention_names"/>
+                                    <label for="material_attribute"/>
                                     <div class="text-muted">
-                                        Sheetmetal convention names
+                                        Material attribute
                                     </div>
                                     <div class="content-group">
                                         <div class="mt16">
-                                            <field name="sheetmetal_convention_names" class="o_light_label" widget="many2many_tags"/>
+                                            <field name="material_attribute" class="o_light_label" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12 col-lg-6 o_setting_box ">
                                 <div class="o_setting_right_pane">
-                                    <label for="profile_convention_names"/>
+                                    <label for="thickness_attribute"/>
                                     <div class="text-muted">
-                                        Profile convention names
+                                        Thickness attribute
                                     </div>
                                     <div class="content-group">
                                         <div class="mt16">
-                                            <field name="profile_convention_names" class="o_light_label" widget="many2many_tags"/>
+                                            <field name="thickness_attribute" class="o_light_label" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box ">
+                                <div class="o_setting_right_pane">
+                                    <label for="dimension_attribute"/>
+                                    <div class="text-muted">
+                                        Dimension attribute
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="dimension_attribute" class="o_light_label" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <h2>UOM</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-12 col-lg-6 o_setting_box ">
+                                <div class="o_setting_right_pane">
+                                    <label for="uom_unite"/>
+                                    <div class="text-muted">
+                                        Unite
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="uom_unite" class="o_light_label" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box ">
+                                <div class="o_setting_right_pane">
+                                    <label for="uom_weight"/>
+                                    <div class="text-muted">
+                                        Poids
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="uom_weight" class="o_light_label" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box ">
+                                <div class="o_setting_right_pane">
+                                    <label for="uom_time"/>
+                                    <div class="text-muted">
+                                        Temps
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="uom_time" class="o_light_label" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box ">
+                                <div class="o_setting_right_pane">
+                                    <label for="uom_length"/>
+                                    <div class="text-muted">
+                                        Longueur
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="uom_length" class="o_light_label" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box ">
+                                <div class="o_setting_right_pane">
+                                    <label for="uom_volume"/>
+                                    <div class="text-muted">
+                                        Volume
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="uom_volume" class="o_light_label" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box ">
+                                <div class="o_setting_right_pane">
+                                    <label for="uom_volumic_mass"/>
+                                    <div class="text-muted">
+                                        Masse Volumique
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="uom_volumic_mass" class="o_light_label" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box ">
+                                <div class="o_setting_right_pane">
+                                    <label for="uom_surface"/>
+                                    <div class="text-muted">
+                                        Surface
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <field name="uom_surface" class="o_light_label" />
                                         </div>
                                     </div>
                                 </div>
@@ -92,45 +200,9 @@
 
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-6 o_setting_box ">
-                                <div class="o_setting_left_pane">
-                                    <field name="indice_for_purchased" class="o_light_label"/>
-                                </div>
-                                <div class="o_setting_right_pane">
-                                    <label for="indice_for_purchased"/>
-                                    <div class="text-muted">
-                                        Indice autorisé pour les articles achetés
-                                    </div>
 
-                                </div>
-                            </div>
                         </div>
-                        <h2>Evenement sur articles</h2>
-                        <div class="row mt16 o_settings_container">
-                            <div class="col-12 col-lg-6 o_setting_box ">
-                                <div class="o_setting_left_pane">
-                                    <field name="clear_product_on_category_change" class="o_light_label"/>
-                                </div>
-                                <div class="o_setting_right_pane">
-                                    <label for="clear_product_on_category_change"/>
-                                    <div class="text-muted">
-                                        Effacer les données liées au changement de catégorie
-                                    </div>
 
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6 o_setting_box ">
-                                <div class="o_setting_left_pane">
-                                    <field name="clear_product_on_name_change" class="o_light_label"/>
-                                </div>
-                                <div class="o_setting_right_pane">
-                                    <label for="clear_product_on_name_change"/>
-                                    <div class="text-muted">
-                                        Effacer les données liées au changement de nom
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </xpath>
             </field>

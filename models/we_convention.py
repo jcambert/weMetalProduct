@@ -10,5 +10,5 @@ class WeConvention(models.Model):
     @api.onchange('convention')
     def on_convention_changed(self):
         if isinstance(self.convention,str):
-            self.convention = str(self.name).strip()
+            self.convention = str(self.convention).strip()
         return

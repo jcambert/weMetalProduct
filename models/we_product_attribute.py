@@ -14,10 +14,10 @@ class ProductAttribute(Model):
             
             
     display_type = fields.Selection( selection_add=[
-        ('dimension','Dimension'),
+        ('sheetmetalsize','Format tole'),
         ('thickness','Thickness'),
         ('material','Material')], 
-        ondelete={'dimension': 'cascade','thickness': 'cascade','material': 'cascade',})
+        ondelete={'sheetmetalsize': 'cascade','thickness': 'cascade','material': 'cascade',})
     uom_domain_id=fields.Integer('uom domain id',compute='_compute_uom_domain_id')
     uom_id = fields.Many2one('uom.uom', string='Unit of Measure')
 

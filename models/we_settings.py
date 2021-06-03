@@ -2,24 +2,25 @@ from odoo import api, fields, models
 import sys
 from ast import literal_eval
 
-SETTINGS='weSettings'
-SHEETMETAL_CATEGORY='sheetmetal_category'
-PRODUCT_NAME_FORCE_UPPERCASE='product_name_force_uppercase'
-MATERIAL_ATTRIBUTE='material_attribute'
-THICKNESS_ATTRIBUTE='thickness_attribute'
-DIMENSION_ATTRIBUTE='dimension_attribute'
-UOM_UNITE='uom_unite'
-UOM_WEIGHT='uom_weight'
-UOM_TIME='uom_time'
-UOM_LENGTH='uom_length'
-UOM_VOLUME='uom_volume'
-UOM_VOLUMIC_MASS='uom_volumic_mass'
-UOM_SURFACE='uom_surface'
+SETTINGS='weSettings.'
+SHEETMETAL_CATEGORY=SETTINGS+'sheetmetal_category'
+PRODUCT_NAME_FORCE_UPPERCASE=SETTINGS+'product_name_force_uppercase'
+MATERIAL_ATTRIBUTE=SETTINGS+'material_attribute'
+THICKNESS_ATTRIBUTE=SETTINGS+'thickness_attribute'
+DIMENSION_ATTRIBUTE=SETTINGS+'dimension_attribute'
+UOM_UNITE=SETTINGS+'uom_unite'
+UOM_WEIGHT=SETTINGS+'uom_weight'
+UOM_TIME=SETTINGS+'uom_time'
+UOM_LENGTH=SETTINGS+'uom_length'
+UOM_VOLUME=SETTINGS+'uom_volume'
+UOM_VOLUMIC_MASS=SETTINGS+'uom_volumic_mass'
+UOM_SURFACE=SETTINGS+'uom_surface'
 class WeSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     
     sheetmetal_category=fields.Many2one('product.category',default=False,config_parameter=SHEETMETAL_CATEGORY, string='Sheetmetal category')
+    profile_categories=fields.Many2many('product.category',string='Profiles categories')
     component_category=fields.Many2one('product.category',default=False,config_parameter='component_category',string='Product category')
     product_name_force_uppercase = fields.Boolean('Force name uppercase',default=False,config_parameter=PRODUCT_NAME_FORCE_UPPERCASE, help='Clear product material on name change')
     material_attribute = fields.Many2one('product.attribute',default=False,config_parameter=MATERIAL_ATTRIBUTE,string='Material attribute')

@@ -1,18 +1,20 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api,_
 from odoo.exceptions import AccessError, UserError,ValidationError
+from .models import Model,SHEETMETAL_CATEGORY
 from ast import literal_eval
 import logging
 import re
 import math
 _logger = logging.getLogger(__name__)
    
-class WeProduct(models.Model):
+class WeProductTemplate(Model):
     _inherit = ['product.template']
-    _description = 'Product Erp extensions'
+    _description = 'Product Metal Template'
     _sql_constraints = [
         ('we_product_name_uniq','unique(name)',"This name already exist !")
     ]
+    product_type=fields.Selection([('none','Aucun'),('sheetmetal','Tole'),('tuberond','Tube Rond'),('tubecarre','Tube Carré'),('tuberect','Tube Rect.'),('profile','Profilé')],'none',string='Type')
     indices=fields.One2many('we.indice','product',string="Indice")
     current_indice = fields.Char('Current indice',compute='_compute_current_indice',readonly=True)
     state = fields.Selection(
@@ -204,7 +206,8 @@ class WeProduct(models.Model):
 
     @api.onchange('categ_id','name')
     def _compute_type(self):
-        sheetmetal_id = self.env['ir.config_parameter'].get_param('weMetalProduct.sheetmetal_category') or False
+        # sheetmetal_id = self.env['ir.config_parameter'].get_param('weMetalProduct.sheetmetal_category') or False
+        sheetmetal_id = self.get_param(SHEETMETAL_CATEGORY) 
         profile_ids = self.env['ir.config_parameter'].get_param('weMetalProduct.profile_categories') or []
         # sheetmetals=self.env['we.sheetmetal'].search([])
         profile_types=self.env['we.profile.type'].search([])
@@ -267,3 +270,9 @@ class WeProduct(models.Model):
         action['domain'] = [ ('product', 'in', self.ids)]
         action['context'] = {}
         return action
+
+class WeProductProduct(Model):
+    _inherit = ['product.product']
+    _description = 'Product Metal'
+    dim1=fields.Float('dim1',digits='Product Unit of Measure',default=0.0)#length, external diameter
+    dim2=fields.Float('dim2',digits='Product Unit of Measure',default=0.0)#Width, external diameter

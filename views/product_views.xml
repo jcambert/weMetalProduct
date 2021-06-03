@@ -24,7 +24,7 @@
       </field>
     </record>
 
-  
+
 
     <record id="weproduct_product_form_profile_view" model="ir.ui.view">
       <field name="name">weMetalProduct.product.profile.form</field>
@@ -37,10 +37,12 @@
             <page name="we_product_profile" string="Dimensions">
               <group >
                 <group string="Types">
+                  <field name="product_type" invisible="0"/>
                   <field name="is_profile" invisible="0"/>
                   <field name="is_sheetmetal" invisible="0"/>
-                  <field name="is_predefined_profile"  invisible="0"/>
+                  <field name="is_predefined_profile" invisible="0"/>
                   <field name="profile_type" invisible="0" />
+                  <field name="product_variant_count" invisible="0" />
                 </group>
                 <group string="Matiere">
                   <label for="material"/>
@@ -52,7 +54,7 @@
                     <field name="finition" />
                   </div>
                 </group>
-                <group string="Dimensions">
+                <group string="Dimensions" attrs="{'invisible': [('product_variant_count', '>',1)]}">
                   <field name="profile_length" />
                   <field name="dim1" />
                   <field name="dim2" />
@@ -60,7 +62,35 @@
                   <field name="dim4" />
                   <field name="dim5" />
                 </group>
-                <group string="Informations">
+                <group string="Dimensions Profilé" attrs="{'invisible': ['|',  ('product_variant_count', '>',1),('is_profile','=',False)]}">
+                  <label for="dim1">Longueur</label>
+                  <div>
+                    <field name="dim1" />
+                  </div>
+                  <label for="dim2">Largeur</label>
+                  <div>
+                    <field name="dim2" />
+                  </div>
+                  <label for="dim5">Epaisseur</label>
+                  <div>
+                    <field name="dim5" />
+                  </div>
+                </group>
+                <group string="Dimensions Tole" attrs="{'invisible': ['|',  ('product_variant_count', '>',1),('is_sheetmetal','=',False)]}">
+                  <label for="dim1">Longueur</label>
+                  <div>
+                    <field name="dim1" />
+                  </div>
+                  <label for="dim2">Largeur</label>
+                  <div>
+                    <field name="dim2" />
+                  </div>
+                  <label for="dim5">Epaisseur</label>
+                  <div>
+                    <field name="dim5" />
+                  </div>
+                </group>
+                <group string="Informations" attrs="{'invisible': [('product_variant_count', '>', 1)]}">
                   <field name="surface_section" />
                   <field name="surface_meter" />
                   <field name="weight_meter" />

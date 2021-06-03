@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data >
-        <record forcecreate="True" model="we.profile.type" id="we_sheetmetal_pet">
+        <record forcecreate="True" model="we.profile.type" id="we_sheetmetal">
+            <field name="name">Tole</field>
+            <field name="length">2000</field>
+            <field name="width">1000</field>
+            <field name="convention">^(?P&lt;material&gt;\w*)-(?P&lt;thickness&gt;[0-9\.]*)(\+(?P&lt;finition&gt;\w*))*$</field>
+            <field name="calculate_surface_section">value_two * thickness</field>
+            <field name="calculate_surface_meter" >(value_two+thickness)*2000</field>
+        </record>
+        <!--<record forcecreate="True" model="we.profile.type" id="we_sheetmetal_pet">
             <field name="name">Tole Petit format</field>
             <field name="length">2000</field>
             <field name="width">1000</field>
@@ -24,14 +32,16 @@
             <field name="convention">^(?P&lt;material&gt;\w*)-(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;format&gt;gra)(\+(?P&lt;finition&gt;\w*))*$</field>
             <field name="calculate_surface_section">value_two * thickness</field>
             <field name="calculate_surface_meter" >(value_two + thickness)*2000</field>
-        </record>
+        </record>-->
 
         <record forcecreate="True" model="we.profile.type" id="we_profile_type_upn">
             <field name="name">Profile UPN</field>
+            <field name="default_length">6</field>
             <field name="convention" >^(?P&lt;name&gt;UPN)(?P&lt;value&gt;[0-9]*)$</field>
         </record>
         <record forcecreate="True" model="we.profile.type" id="we_profile_type_upe">
             <field name="name">Profile UPE</field>
+            <field name="default_length">6</field>
             <field name="convention">^(?P&lt;name&gt;UPE)(?P&lt;value&gt;[0-9]*)$</field>
         </record>
         <record forcecreate="True" model="we.profile.type" id="we_profile_type_hea">
@@ -41,6 +51,7 @@
         </record>
         <record forcecreate="True" model="we.profile.type" id="we_profile_type_heb">
             <field name="name">Profile HEB</field>
+            <field name="default_length">6</field>
             <field name="convention" >^(?P&lt;name&gt;HEB)(?P&lt;value&gt;[0-9]*)$</field>
         </record>
 

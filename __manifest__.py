@@ -18,7 +18,7 @@
     'category': 'Productivity',
     'version': '1.0',
     # any module necessary for this one to work correctly
-    'depends': ['base','mrp','product', 'mail', 'uom'],
+    'depends': ['base','mrp','product',  'uom'],
 
     # always loaded
     'data': [
@@ -27,11 +27,6 @@
         # 'data/ir_cron.xml',
         # 'data/ir_module_category.xml',
         # 'data/mrp_plm_data.xml',
-        'data/product_categories.xml',
-        'data/materials.xml',
-        'data/profiles.xml',
-        'data/settings.xml',
-        'data/product_attribute.xml',
         'views/indice_views.xml',
         'views/product_views.xml',
         'views/material_views.xml',
@@ -39,7 +34,12 @@
         'views/profile_type_views.xml',
         'views/menus_views.xml',
         'views/res_config_settings_view.xml',
-        
+        'views/product_attribute_views.xml',
+        'data/product_categories.xml',
+        'data/materials.xml',
+        'data/profiles.xml',
+        'data/settings.xml',
+        'data/product_attribute.xml',
     ],
     'qweb': ['static/src/xml/*.xml'],
     # only loaded in demonstration mode
