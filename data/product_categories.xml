@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data >
-        <record forcecreate="True" model="product.category" id="product_category_toute">
+        <!-- <record forcecreate="True" model="product.category" id="product_category_toute">
             <field name="name">Toute</field>
         </record>
         <record forcecreate="True" model="product.category" id="product_category_vente">
@@ -15,26 +15,41 @@
         <record forcecreate="True" model="product.category" id="product_category_mp">
             <field name="parent_id" ref="product_category_achat"/>
             <field name="name">Matiere Premiere</field>
-        </record>
+        </record> -->
         <record forcecreate="True" model="product.category" id="product_category_to">
-            <field name="parent_id" ref="product_category_mp"/>
+            <field name="parent_id" ref="product.product_category_all"/>
             <field name="name">Tole</field>
-        </record>
-        <record forcecreate="True" model="product.category" id="product_category_pr">
-            <field name="parent_id" ref="product_category_mp"/>
-            <field name="name">Profile</field>
+            <field name="convention">^(?P&lt;material&gt;\w*)-(?P&lt;thickness&gt;[0-9\.]*)(\+(?P&lt;finition&gt;\w*))*$</field>
+            <field name="surface_formula">((length*width)/10000)*2</field>
+            <field name="volume_formula">(length*width*thickness)/1000000</field>
+            <field name="weight_formula">(length*width*thickness*volmass)/1000000</field>
+            
         </record>
         <record forcecreate="True" model="product.category" id="product_category_pr_turo">
-            <field name="parent_id" ref="product_category_pr"/>
+            <field name="parent_id" ref="product.product_category_all"/>
             <field name="name">Tube Rond</field>
+            <field name="convention">^(?P&lt;name&gt;TURO*)-(?P&lt;width&gt;[0-9]*)x(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;material&gt;[a-z]*)$</field>
+            <field name="surface_formula">(math.pi*width*length)/1000</field>
+            <field name="weight_formula">length*((width-thickness)*thickness*math.pi*volmass)/1000</field>
         </record>
         <record forcecreate="True" model="product.category" id="product_category_pr_tuca">
-            <field name="parent_id" ref="product_category_pr"/>
+            <field name="parent_id" ref="product.product_category_all"/>
             <field name="name">Tube Carré</field>
+            <field name="convention">^(?P&lt;name&gt;TUCA*)-(?P&lt;width&gt;[0-9]*)x(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;material&gt;[a-z]*)$</field>
+            <field name="surface_formula">(4*width*length)/1000</field>
+            <field name="weight_formula">length*((width**2) -((width-2*thickness)**2) )*volmass/1000000</field>
+            
         </record>
         <record forcecreate="True" model="product.category" id="product_category_pr_ture">
-            <field name="parent_id" ref="product_category_pr"/>
+            <field name="parent_id" ref="product.product_category_all"/>
             <field name="name">Tube Rect</field>
+            <field name="convention">^(?P&lt;name&gt;TURE*)-(?P&lt;width&gt;[0-9]*)x(?P&lt;height&gt;[0-9]*)x(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;material&gt;[a-z]*)$</field>
+            <field name="surface_formula">2*(height*width*length)/1000</field>
+            <field name="weight_formula">length*((width*height) -((width-2*thickness)*(height-2*thickness)) )*volmass/1000000</field>
+        </record>
+        <!-- <record forcecreate="True" model="product.category" id="product_category_pr">
+            <field name="parent_id" ref="product_category_mp"/>
+            <field name="name">Profile</field>
         </record>
         <record forcecreate="True" model="product.category" id="product_category_pr_ipn">
             <field name="parent_id" ref="product_category_pr"/>
@@ -51,7 +66,7 @@
         <record forcecreate="True" model="product.category" id="product_category_pr_heb">
             <field name="parent_id" ref="product_category_pr"/>
             <field name="name">HEB</field>
-        </record>
+        </record> -->
 
 
         

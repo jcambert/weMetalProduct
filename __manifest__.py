@@ -12,6 +12,9 @@
     'author': "AMBERT Jean-Christophe",
     'website': "http://jc.ambert.free.fr",
 
+    #For Orm goto https://www.odoo.com/documentation/14.0/fr/developer/reference/orm.html
+    
+
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/14.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
@@ -27,17 +30,18 @@
         # 'data/ir_cron.xml',
         # 'data/ir_module_category.xml',
         # 'data/mrp_plm_data.xml',
-        'views/indice_views.xml',
+        # 'views/indice_views.xml',
         'views/product_views.xml',
         'views/material_views.xml',
-        'views/profile_views.xml',
-        'views/profile_type_views.xml',
-        'views/menus_views.xml',
-        'views/res_config_settings_view.xml',
+        # 'views/profile_views.xml',
+        # 'views/profile_type_views.xml',
+        # 'views/res_config_settings_view.xml',
         'views/product_attribute_views.xml',
+        'views/product_category_views.xml',
+        'views/menus_views.xml',
         'data/product_categories.xml',
         'data/materials.xml',
-        'data/profiles.xml',
+        # 'data/profiles.xml',
         'data/settings.xml',
         'data/product_attribute.xml',
     ],

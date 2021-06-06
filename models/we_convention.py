@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api,_
 from odoo.exceptions import AccessError, UserError,ValidationError
-
+import re
 
 class WeConvention(models.Model):
     _name='we.convention'
@@ -12,3 +12,12 @@ class WeConvention(models.Model):
         if isinstance(self.convention,str):
             self.convention = str(self.convention).strip()
         return
+    @api.model
+    def parse(self,convention,value,results):
+        p = re.compile(convention,re.IGNORECASE)
+        m = p.match(value)
+        if m:
+            if isinstance(results,dict):
+                results.update(m.groupdict())
+            return True
+        return False

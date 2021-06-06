@@ -1,14 +1,14 @@
 <odoo>
   <data>
 
-    <record id="weproduct_product_form_view" model="ir.ui.view">
+    <record id="wemetal_product_template_form_view" model="ir.ui.view">
       <field name="name">weMetalProduct.product.form</field>
       <field name="model">product.template</field>
       <field name="inherit_id" ref="product.product_template_form_view"/>
       <field name="arch" type="xml">
         <data>
           <div name="button_box" position="inside">
-            <button class="oe_stat_button" name="action_view_indice" type="object" icon="fa-list-ol">
+            <!-- <button class="oe_stat_button" name="action_view_indice" type="object" icon="fa-list-ol">
               <div class="o_field_widget o_stat_info mr4">
                 <span class="o_stat_text">Indice :</span>
               </div>
@@ -18,15 +18,13 @@
                 </span>
 
               </div>
-            </button>
+            </button> -->
           </div>
         </data>
       </field>
     </record>
 
-
-
-    <record id="weproduct_product_form_profile_view" model="ir.ui.view">
+    <record id="wemetal_product_profile_form_view" model="ir.ui.view">
       <field name="name">weMetalProduct.product.profile.form</field>
       <field name="model">product.template</field>
       <field name="inherit_id" ref="product.product_template_form_view"/>
@@ -37,11 +35,11 @@
             <page name="we_product_profile" string="Dimensions">
               <group >
                 <group string="Types">
-                  <field name="product_type" invisible="0"/>
                   <field name="is_profile" invisible="0"/>
                   <field name="is_sheetmetal" invisible="0"/>
+                  <!-- <field name="product_type" invisible="0"/>
                   <field name="is_predefined_profile" invisible="0"/>
-                  <field name="profile_type" invisible="0" />
+                  <field name="profile_type" invisible="0" /> -->
                   <field name="product_variant_count" invisible="0" />
                 </group>
                 <group string="Matiere">
@@ -55,45 +53,44 @@
                   </div>
                 </group>
                 <group string="Dimensions" attrs="{'invisible': [('product_variant_count', '>',1)]}">
-                  <field name="profile_length" />
-                  <field name="dim1" />
-                  <field name="dim2" />
-                  <field name="dim3" />
-                  <field name="dim4" />
-                  <field name="dim5" />
+                  <!-- <field name="profile_length" /> -->
+                  <field name="length" />
+                  <field name="width" />
+                  <field name="height" />
+                  <field name="thickness" />
                 </group>
                 <group string="Dimensions Profilé" attrs="{'invisible': ['|',  ('product_variant_count', '>',1),('is_profile','=',False)]}">
-                  <label for="dim1">Longueur</label>
+                  <label for="length">Longueur</label>
                   <div>
-                    <field name="dim1" />
+                    <field name="length" />
                   </div>
-                  <label for="dim2">Largeur</label>
+                  <label for="width">Largeur</label>
                   <div>
-                    <field name="dim2" />
+                    <field name="width" />
                   </div>
-                  <label for="dim5">Epaisseur</label>
+                  <label for="thickness">Epaisseur</label>
                   <div>
-                    <field name="dim5" />
+                    <field name="thickness" />
                   </div>
                 </group>
                 <group string="Dimensions Tole" attrs="{'invisible': ['|',  ('product_variant_count', '>',1),('is_sheetmetal','=',False)]}">
-                  <label for="dim1">Longueur</label>
+                  <label for="length">Longueur</label>
                   <div>
-                    <field name="dim1" />
+                    <field name="length" />
                   </div>
-                  <label for="dim2">Largeur</label>
+                  <label for="width">Largeur</label>
                   <div>
-                    <field name="dim2" />
+                    <field name="width" />
                   </div>
-                  <label for="dim5">Epaisseur</label>
+                  <label for="thickness">Epaisseur</label>
                   <div>
-                    <field name="dim5" />
+                    <field name="thickness" />
                   </div>
                 </group>
                 <group string="Informations" attrs="{'invisible': [('product_variant_count', '>', 1)]}">
-                  <field name="surface_section" />
+                  <!-- <field name="surface_section" />
                   <field name="surface_meter" />
-                  <field name="weight_meter" />
+                  <field name="weight_meter" /> -->
                   <field name="surface" />
                   <field name="weight" />
                 </group>
@@ -102,6 +99,57 @@
           </notebook>
 
         </data>
+      </field>
+    </record>
+    <record id="wemetal_product_product_form_view" model="ir.ui.view">
+      <field name="name">weMetalProduct.product.profile.form</field>
+      <field name="model">product.product</field>
+      <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//group[@name='weight']" position="replace">
+          <group name="weight" string="Logistique" attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}">
+
+            <label for="surface"/>
+            <div class="o_row">
+              <field name="surface"/>
+              <span>
+                <!-- <field name="surface_uom_name"/> -->
+              </span>
+            </div>
+            <label for="volume"/>
+            <div class="o_row">
+              <field name="volume"/>
+              <span>
+                <field name="volume_uom_name"/>
+              </span>
+            </div>
+            <label for="weight"/>
+            <div class="o_row">
+              <field name="weight"/>
+              <span>
+                <field name="weight_uom_name"/>
+              </span>
+            </div>
+          </group>
+        </xpath>
+        <xpath expr="//sheet" position="inside">
+          <group>
+            <group name="dimensions" string="Dimensions">
+              <label for="length"/>
+              <div class="o_row">
+                <field name="length"/>
+              </div>
+              <label for="width"/>
+              <div class="o_row">
+                <field name="width"/>
+              </div>
+              <label for="thickness"/>
+              <div class="o_row">
+                <field name="thickness"/>
+              </div>
+            </group>
+          </group>
+        </xpath>
       </field>
     </record>
   </data>

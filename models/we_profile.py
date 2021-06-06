@@ -14,7 +14,8 @@ class WeProfileType(models.Model):
     _sql_constraints = [
         ('name_uniq','unique(name)',"The name of this profile type must be unique"),
     ]
-    name=fields.Char('Type',required=True)
+    name=fields.Char('Name',required=True)
+    product_type=fields.Selection([('none','Aucun'),('sheetmetal','Tole'),('tuberond','Tube Rond'),('tubecarre','Tube Carré'),('tuberect','Tube Rect.'),('profile','Profilé')],string='Type')
     length=fields.Float('Length',default=0.0)
     width=fields.Float('Width',default=0.0)
     default_length=fields.Integer('Default length',default=0.0)

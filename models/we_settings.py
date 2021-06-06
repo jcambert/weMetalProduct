@@ -19,19 +19,19 @@ class WeSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     
-    sheetmetal_category=fields.Many2one('product.category',default=False,config_parameter=SHEETMETAL_CATEGORY, string='Sheetmetal category')
-    profile_categories=fields.Many2many('product.category',string='Profiles categories')
-    component_category=fields.Many2one('product.category',default=False,config_parameter='component_category',string='Product category')
+    # sheetmetal_category=fields.Many2one('product.category',default=False,config_parameter=SHEETMETAL_CATEGORY, string='Sheetmetal category')
+    # profile_categories=fields.Many2many('product.category',string='Profiles categories')
+    # component_category=fields.Many2one('product.category',default=False,config_parameter='component_category',string='Product category')
     product_name_force_uppercase = fields.Boolean('Force name uppercase',default=False,config_parameter=PRODUCT_NAME_FORCE_UPPERCASE, help='Clear product material on name change')
-    material_attribute = fields.Many2one('product.attribute',default=False,config_parameter=MATERIAL_ATTRIBUTE,string='Material attribute')
-    thickness_attribute = fields.Many2one('product.attribute',default=False,config_parameter=THICKNESS_ATTRIBUTE,string='Thickness attribute')
-    dimension_attribute = fields.Many2one('product.attribute',default=False,config_parameter=DIMENSION_ATTRIBUTE,string='Dimension attribute')
+    # material_attribute = fields.Many2one('product.attribute',default=False,config_parameter=MATERIAL_ATTRIBUTE,string='Material attribute')
+    # thickness_attribute = fields.Many2one('product.attribute',default=False,config_parameter=THICKNESS_ATTRIBUTE,string='Thickness attribute')
+    # dimension_attribute = fields.Many2one('product.attribute',default=False,config_parameter=DIMENSION_ATTRIBUTE,string='Dimension attribute')
 
     """ Needs for domain uom filtering """
-    uom_unite = fields.Many2one('uom.category',string='Unite Category',config_parameter=UOM_UNITE)
-    uom_weight = fields.Many2one('uom.category',string='Weight Category',config_parameter=UOM_WEIGHT)
-    uom_time =  fields.Many2one('uom.category',string='Time Category',config_parameter=UOM_TIME)
-    uom_length= fields.Many2one('uom.category',string='Length/Distance Category',config_parameter=UOM_LENGTH)
-    uom_volume = fields.Many2one('uom.category',string='Volume Category',config_parameter=UOM_VOLUME)
-    uom_volumic_mass= fields.Many2one('uom.category',string='Volumic Mass Category',config_parameter=UOM_VOLUMIC_MASS)
-    uom_surface= fields.Many2one('uom.category',string='Surface Category',config_parameter=UOM_SURFACE)
+    # uom_unite = fields.Many2one('uom.category',string='Unite Category',config_parameter=UOM_UNITE)
+    # uom_weight = fields.Many2one('uom.category',string='Weight Category',config_parameter=UOM_WEIGHT)
+    # uom_time =  fields.Many2one('uom.category',string='Time Category',config_parameter=UOM_TIME)
+    # uom_length= fields.Many2one('uom.category',string='Length/Distance Category',config_parameter=UOM_LENGTH)
+    # uom_volume = fields.Many2one('uom.category',string='Volume Category',config_parameter=UOM_VOLUME)
+    # uom_volumic_mass= fields.Many2one('uom.category',string='Volumic Mass Category',config_parameter=UOM_VOLUMIC_MASS)
+    # uom_surface= fields.Many2one('uom.category',string='Surface Category',config_parameter=UOM_SURFACE)

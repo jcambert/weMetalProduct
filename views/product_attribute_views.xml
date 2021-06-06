@@ -8,11 +8,11 @@
         <field name="arch" type="xml">
             <xpath expr="//group[@name='main_fields']" position="inside">
                 <field name="uom_domain_id" invisible="1" />
-                <field name="uom_id" domain="[('category_id.id','=', uom_domain_id )]" attrs="{'invisible': [('display_type', 'not in', ('dimension','thickness'))]}"/>
+                <field name="uom_id" domain="[('category_id.id','=', uom_domain_id )]" attrs="{'invisible': [('display_type', 'not in', ('sheetmetalsize','profilelength','thickness'))]}"/>
             </xpath>
             <xpath expr="//field[@name='value_ids']/tree" position="inside">
-                <field name="length" string="Width" attrs="{'column_invisible': [('parent.display_type', '!=', 'sheetmetalsize')]}" />
-                <field name="width" string="Length" attrs="{'column_invisible': [('parent.display_type', '!=', 'sheetmetalsize')]}" />
+                <field name="length" string="Length" attrs="{'column_invisible': [('parent.display_type', 'not in', ('sheetmetalsize','profilelength'))]}" />
+                <field name="width" string="Width" attrs="{'column_invisible': [('parent.display_type', '!=', 'sheetmetalsize')]}" />
                 <field name="thickness" string="Thickness" attrs="{'column_invisible': [('parent.display_type', '!=', 'thickness')]}" />
                 <field name="material" string="Material" attrs="{'column_invisible': [('parent.display_type', '!=', 'material')]}" />
             </xpath>

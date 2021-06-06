@@ -1,29 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <record id="product_uom_mm" model="uom.uom">
+            <field name="category_id" ref="uom.uom_categ_length"/>
+            <field name="name">mm</field>
+            <field name="factor" eval="1000"/>
+            <field name="uom_type">smaller</field>
+        </record>
+
         <!-- <data> -->
-        <record  forcecreate="True" model="product.attribute" id="product_attribute_dimension_tole">
+        <record forcecreate="True" model="product.attribute" id="product_attribute_dimension_tole">
             <field name="name">Dimension Tole</field>
             <field name="display_type">sheetmetalsize</field>
-            <field name="uom_id" ref="uom.uom_categ_length"></field>
+            <field name="uom_id" ref="weMetalProduct.product_uom_mm"/>
         </record>
         <record forcecreate="True" model="product.attribute.value" id="product_attribute_dimension_tole_xs">
             <field name="attribute_id" ref="product_attribute_dimension_tole"/>
+
             <field name="name">Petit Format</field>
             <field name="length">2000</field>
             <field name="width">1000</field>
+            <field name="code_suffixe">PET</field>
         </record>
         <record forcecreate="True" model="product.attribute.value" id="product_attribute_dimension_tole_md">
             <field name="attribute_id" ref="product_attribute_dimension_tole"/>
             <field name="name">Moyen Format</field>
             <field name="length">2500</field>
             <field name="width">1250</field>
+            <field name="code_suffixe">MOY</field>
         </record>
         <record forcecreate="True" model="product.attribute.value" id="product_attribute_dimension_tole_xl">
             <field name="attribute_id" ref="product_attribute_dimension_tole"/>
             <field name="name">Grand Format</field>
             <field name="length">3000</field>
             <field name="width">1500</field>
+            <field name="code_suffixe">GRA</field>
+        </record>
+
+        <record forcecreate="True" model="product.attribute" id="product_attribute_longueur_profile">
+            <field name="name">Longueur Profile</field>
+            <field name="display_type">profilelength</field>
+            <field name="uom_id" ref="weMetalProduct.product_uom_mm"/>
+        </record>
+        <record forcecreate="True" model="product.attribute.value" id="product_attribute_longueur_xs">
+            <field name="attribute_id" ref="product_attribute_longueur_profile"/>
+            <field name="name">Petit</field>
+            <field name="length">1000</field>
+            <field name="code_suffixe">-1M</field>
+        </record>
+        <record forcecreate="True" model="product.attribute.value" id="product_attribute_longueur_md">
+            <field name="attribute_id" ref="product_attribute_longueur_profile"/>
+            <field name="name">Moyen</field>
+            <field name="length">3000</field>
+            <field name="code_suffixe">-3M</field>
+        </record>
+        <record forcecreate="True" model="product.attribute.value" id="product_attribute_longueur_xl">
+            <field name="attribute_id" ref="product_attribute_longueur_profile"/>
+            <field name="name">Grand</field>
+            <field name="length">6000</field>
+            <field name="code_suffixe">-6M</field>
         </record>
     </data>
 </odoo>
