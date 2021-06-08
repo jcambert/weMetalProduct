@@ -35,8 +35,8 @@
             <page name="we_product_profile" string="Dimensions">
               <group >
                 <group string="Types">
-                  <field name="is_profile" invisible="0"/>
-                  <field name="is_sheetmetal" invisible="0"/>
+                  <field name="isprofile" invisible="0"/>
+                  <field name="issheetmetal" invisible="0"/>
                   <!-- <field name="product_type" invisible="0"/>
                   <field name="is_predefined_profile" invisible="0"/>
                   <field name="profile_type" invisible="0" /> -->
@@ -59,7 +59,7 @@
                   <field name="height" />
                   <field name="thickness" />
                 </group>
-                <group string="Dimensions Profilé" attrs="{'invisible': ['|',  ('product_variant_count', '>',1),('is_profile','=',False)]}">
+                <group string="Dimensions Profilé" attrs="{'invisible': ['|',  ('product_variant_count', '>',1),('isprofile','=',False)]}">
                   <label for="length">Longueur</label>
                   <div>
                     <field name="length" />
@@ -73,7 +73,7 @@
                     <field name="thickness" />
                   </div>
                 </group>
-                <group string="Dimensions Tole" attrs="{'invisible': ['|',  ('product_variant_count', '>',1),('is_sheetmetal','=',False)]}">
+                <group string="Dimensions Tole" attrs="{'invisible': ['|',  ('product_variant_count', '>',1),('issheetmetal','=',False)]}">
                   <label for="length">Longueur</label>
                   <div>
                     <field name="length" />

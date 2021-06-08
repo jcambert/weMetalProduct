@@ -47,8 +47,8 @@ class WeProductTemplate(Model):
 
 
     # profile_type=fields.Many2one('we.profile.type')
-    is_profile=fields.Boolean('Profile',readonly =True)
-    is_sheetmetal =fields.Boolean('Sheetmetal',readonly =True)
+    isprofile=fields.Boolean('Profile',readonly =True)
+    issheetmetal =fields.Boolean('Sheetmetal',readonly =True)
     # is_predefined_profile=fields.Boolean('Is predefined profile')
     # profile_length = fields.Integer('Profile length')
     # surface_section = fields.Float('Surface Section', digits='Product Unit of Measure', default=0.0)
@@ -116,8 +116,8 @@ class WeProductTemplate(Model):
         materials=self.env['we.material'].search([])
         try:
             record=self
-            record.is_profile=False
-            record.is_sheetmetal=True
+            record.isprofile=False
+            record.issheetmetal=True
             if not record.categ_id or not record.name:
                 return
             groups={}
