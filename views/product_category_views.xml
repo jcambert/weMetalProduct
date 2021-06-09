@@ -13,7 +13,13 @@
                         <field name="weight_formula" />
                     </group>
                     <group name="type" string="Type">
+                        <field name="length_uom_categ" />
+                        <field name="surface_uom_categ" />
+                        <field name="weight_uom_categ" />
                         <field name="cattype" />
+                        <field name="length_uom" />
+                        <field name="surface_uom" />
+                        <field name="weight_uom" />
                     </group>
                 </xpath>
             </field>

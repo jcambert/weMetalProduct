@@ -11,15 +11,35 @@ _logger = logging.getLogger(__name__)
 class WeProductCategory(Model):
     
     _inherit='product.category'
+    # @tools.ormcache()
+    def _get_default_length_uom_categ(self):
+        # Deletion forbidden (at least through unlink)
+        return self.env.ref('uom.uom_categ_length')
+    # @tools.ormcache()
+    def _get_default_surface_uom_categ(self):
+        # Deletion forbidden (at least through unlink)
+        result= self.env.ref('weMetalProduct.uom_categ_surface')
+        return result
+    # @tools.ormcache()
+    def _get_default_weight_uom_categ(self):
+        # Deletion forbidden (at least through unlink)
+        result= self.env.ref('uom.product_uom_categ_kgm')
+        return result
     surface_formula=fields.Char('Surface Formula',default='')
     volume_formula=fields.Char('Volume Formula',default='')
     weight_formula=fields.Char('Weight Formula',default='')
     convention=fields.Char('Convention',help="python regex string convention",default='')
     cattype=fields.Selection([('none','None'),('sheetmetal','Sheetmetal'),('profile','Profile')],default='none',string='Type')
     
-    length_uom=fields.Many2one('uom.uom','Lenght Unit',required=True)
-    surface_uom=fields.Many2one('uom.uom','Surface Unit',required=True)
-    weight_uom =fields.Many2one('uom.uom','Lenght Unit',required=True)
+    length_uom=fields.Many2one('uom.uom','Length Unit',required=True,domain="[('category_id','=',length_uom_categ)]")
+    length_uom_categ=fields.Many2one('uom.category','Length',default=_get_default_length_uom_categ,store=False,readonly=True)
+
+    surface_uom=fields.Many2one('uom.uom','Surface Unit',required=True,domain="[('category_id','=',surface_uom_categ)]")
+    surface_uom_categ=fields.Many2one('uom.category ','Surface',default=_get_default_surface_uom_categ,store=False,readonly=True)
+
+    weight_uom =fields.Many2one('uom.uom','Weight Unit',required=True,domain="[('category_id','=',weight_uom_categ)]")
+    weight_uom_categ=fields.Many2one('uom.category ','Weight',default=_get_default_weight_uom_categ,store=False,readonly=True)
+
     @api.model
     def parse(self,convention,value,results):
         p = re.compile(convention,re.IGNORECASE)

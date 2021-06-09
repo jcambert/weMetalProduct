@@ -1,0 +1,4 @@
+#. module: weMetalProduct
+#: model:weMetalProduct.category,name:weMetalProduct.uom_categ_surface
+msgid "Surface"
+msgstr "Surface"

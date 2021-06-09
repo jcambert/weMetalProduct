@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="product_uom_mm" model="uom.uom">
-            <field name="category_id" ref="uom.uom_categ_length"/>
-            <field name="name">mm</field>
-            <field name="factor" eval="1000"/>
-            <field name="uom_type">smaller</field>
-        </record>
+        
 
         <!-- <data> -->
         <record forcecreate="True" model="product.attribute" id="product_attribute_dimension_tole">

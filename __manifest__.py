@@ -39,6 +39,7 @@
         'views/product_attribute_views.xml',
         'views/product_category_views.xml',
         'views/menus_views.xml',
+        'data/uom.xml',
         'data/product_categories.xml',
         'data/materials.xml',
         # 'data/profiles.xml',
