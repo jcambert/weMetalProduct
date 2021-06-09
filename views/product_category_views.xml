@@ -12,6 +12,9 @@
                         <field name="surface_formula" />
                         <field name="weight_formula" />
                     </group>
+                    <group name="type" string="Type">
+                        <field name="cattype" />
+                    </group>
                 </xpath>
             </field>
         </record>

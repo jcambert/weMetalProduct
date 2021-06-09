@@ -31,15 +31,10 @@
       <field name="arch" type="xml">
         <data>
           <notebook position="inside">
-            <!-- <page name="we_product_profile" string="Profile" attrs="{'invisible': [('is_profile', '=', False)]}"> -->
             <page name="we_product_profile" string="Dimensions">
               <group >
-                <group string="Types">
-                  <field name="isprofile" invisible="0"/>
-                  <field name="issheetmetal" invisible="0"/>
-                  <!-- <field name="product_type" invisible="0"/>
-                  <field name="is_predefined_profile" invisible="0"/>
-                  <field name="profile_type" invisible="0" /> -->
+                <group string="Types" attrs="{'invisible':True}">
+                  <field name="cattype" invisible="0"/>
                   <field name="product_variant_count" invisible="0" />
                 </group>
                 <group string="Matiere">
@@ -52,14 +47,13 @@
                     <field name="finition" />
                   </div>
                 </group>
-                <group string="Dimensions" attrs="{'invisible': [('product_variant_count', '>',1)]}">
-                  <!-- <field name="profile_length" /> -->
+                <group string="Dimensions" attrs="{'invisible': ['|',('product_variant_count', '>',1),('cattype','!=','none')]}">
                   <field name="length" />
                   <field name="width" />
                   <field name="height" />
                   <field name="thickness" />
                 </group>
-                <group string="Dimensions Profilé" attrs="{'invisible': ['|',  ('product_variant_count', '>',1),('isprofile','=',False)]}">
+                <group string="Dimensions Profilé" attrs="{'invisible': ['|',  ('product_variant_count', '>',1),('cattype','!=','profile')]}">
                   <label for="length">Longueur</label>
                   <div>
                     <field name="length" />
@@ -68,12 +62,16 @@
                   <div>
                     <field name="width" />
                   </div>
+                  <label for="height">Hauteur</label>
+                  <div>
+                    <field name="height" />
+                  </div>
                   <label for="thickness">Epaisseur</label>
                   <div>
                     <field name="thickness" />
                   </div>
                 </group>
-                <group string="Dimensions Tole" attrs="{'invisible': ['|',  ('product_variant_count', '>',1),('issheetmetal','=',False)]}">
+                <group string="Dimensions Tole" attrs="{'invisible': ['|',  ('product_variant_count', '>',1),('cattype','!=','sheetmetal')]}">
                   <label for="length">Longueur</label>
                   <div>
                     <field name="length" />
@@ -88,9 +86,6 @@
                   </div>
                 </group>
                 <group string="Informations" attrs="{'invisible': [('product_variant_count', '>', 1)]}">
-                  <!-- <field name="surface_section" />
-                  <field name="surface_meter" />
-                  <field name="weight_meter" /> -->
                   <field name="surface" />
                   <field name="weight" />
                 </group>
