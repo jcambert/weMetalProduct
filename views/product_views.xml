@@ -75,19 +75,30 @@
                   <label for="length">Longueur</label>
                   <div>
                     <field name="length" />
+                    <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
                   </div>
                   <label for="width">Largeur</label>
                   <div>
                     <field name="width" />
+                    <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
                   </div>
                   <label for="thickness">Epaisseur</label>
                   <div>
                     <field name="thickness" />
+                    <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
                   </div>
                 </group>
                 <group string="Informations" attrs="{'invisible': [('product_variant_count', '>', 1)]}">
-                  <field name="surface" />
-                  <field name="weight" />
+                  <label for="surface" />
+                  <div>
+                    <field name="surface" />
+                    <field name="surface_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
+                  </div>
+                  <label for="weight"/>
+                  <div>
+                    <field name="weight" />
+                    <field name="weight_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
+                  </div>
                 </group>
               </group>
             </page>
@@ -108,21 +119,15 @@
             <div class="o_row">
               <field name="surface"/>
               <span>
-                <!-- <field name="surface_uom_name"/> -->
+                <field name="surface_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
               </span>
             </div>
-            <label for="volume"/>
-            <div class="o_row">
-              <field name="volume"/>
-              <span>
-                <field name="volume_uom_name"/>
-              </span>
-            </div>
+            
             <label for="weight"/>
             <div class="o_row">
               <field name="weight"/>
               <span>
-                <field name="weight_uom_name"/>
+                <field name="weight_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
               </span>
             </div>
           </group>
@@ -133,14 +138,17 @@
               <label for="length"/>
               <div class="o_row">
                 <field name="length"/>
+                <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
               </div>
               <label for="width"/>
               <div class="o_row">
                 <field name="width"/>
+                <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
               </div>
               <label for="thickness"/>
               <div class="o_row">
                 <field name="thickness"/>
+                <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
               </div>
             </group>
           </group>

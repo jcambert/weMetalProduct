@@ -19,8 +19,8 @@
         <record forcecreate="True" model="product.category" id="product_category_to">
             <field name="parent_id" ref="product.product_category_all"/>
             <field name="name">Tole</field>
-            <field name="convention">^(?P&lt;material&gt;\w*)-(?P&lt;thickness&gt;[0-9\.]*)(\+(?P&lt;finition&gt;\w*))*$</field>
-            <field name="surface_formula">((length*width)/10000)*2</field>
+            <field name="convention">^(?P&lt;material&gt;\w*)-(?P&lt;thickness&gt;[0-9\.]*)(\+(?P&lt;finition&gt;\w*))*\w*$</field>
+            <field name="surface_formula">((length*width)/1000000)*2</field>
             <field name="volume_formula">(length*width*thickness)/1000000</field>
             <field name="weight_formula">(length*width*thickness*volmass)/1000000</field>
             <field name="cattype">sheetmetal</field>

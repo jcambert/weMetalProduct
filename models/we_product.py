@@ -31,15 +31,19 @@ class WeProductCategory(Model):
     convention=fields.Char('Convention',help="python regex string convention",default='')
     cattype=fields.Selection([('none','None'),('sheetmetal','Sheetmetal'),('profile','Profile')],default='none',string='Type')
     
-    length_uom=fields.Many2one('uom.uom','Length Unit',required=True,domain="[('category_id','=',length_uom_categ)]")
-    length_uom_categ=fields.Many2one('uom.category','Length',default=_get_default_length_uom_categ,store=False,readonly=True)
-
     surface_uom=fields.Many2one('uom.uom','Surface Unit',required=True,domain="[('category_id','=',surface_uom_categ)]")
-    surface_uom_categ=fields.Many2one('uom.category ','Surface',default=_get_default_surface_uom_categ,store=False,readonly=True)
+    surface_uom_categ=fields.Many2one('uom.category',default=_get_default_surface_uom_categ,store=False,readonly=True)
+
+    length_uom=fields.Many2one('uom.uom','Length Unit',required=True,domain="[('category_id','=',length_uom_categ)]")
+    length_uom_categ=fields.Many2one('uom.category',default=_get_default_length_uom_categ,store=False,readonly=True)
+
 
     weight_uom =fields.Many2one('uom.uom','Weight Unit',required=True,domain="[('category_id','=',weight_uom_categ)]")
-    weight_uom_categ=fields.Many2one('uom.category ','Weight',default=_get_default_weight_uom_categ,store=False,readonly=True)
+    weight_uom_categ=fields.Many2one('uom.category',default=_get_default_weight_uom_categ,store=False,readonly=True)
 
+    @api.onchange( 'categ_id.weight_formula','categ_id.surface_formula')
+    def _on_formula_change(self):
+        pass
     @api.model
     def parse(self,convention,value,results):
         p = re.compile(convention,re.IGNORECASE)
@@ -89,7 +93,9 @@ class WeProductTemplate(Model):
     # dim4=fields.Float('dim4',digits='Product Unit of Measure',default=0.0)#Width, internal diameter
     thickness=fields.Float('Thickness',digits='Product Unit of Measure',default=0.0,help="Thickness for Sheetmetal and Pipe")#thickness
 
-    
+    length_uom=fields.Many2one(related="categ_id.length_uom")
+    surface_uom=fields.Many2one(related="categ_id.surface_uom")
+    weight_uom=fields.Many2one(related="categ_id.weight_uom")
     @api.onchange('name')
     def set_upper(self):    
         if isinstance(self.name,str):
@@ -226,7 +232,7 @@ class WeProductProduct(Model):
     width=fields.Float(compute='_compute_size',store=True)
     thickness=fields.Float(related='product_tmpl_id.thickness',string='Thickness',store=True)
     material= fields.Many2one('we.material',related='product_tmpl_id.material')
-    
+    surface=fields.Float('Surface', digits='Product Unit of Measure',default=0.0)
     @api.depends('product_template_attribute_value_ids','product_tmpl_id.name','product_tmpl_id.categ_id')
     def _compute_size(self):
         for product in self:

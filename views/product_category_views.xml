@@ -7,19 +7,36 @@
             <field name="inherit_id" ref="product.product_category_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//sheet" position="inside">
-                    <group name="convention" string="Conventions">
-                        <field name="convention" />
-                        <field name="surface_formula" />
-                        <field name="weight_formula" />
-                    </group>
-                    <group name="type" string="Type">
-                        <field name="length_uom_categ" />
-                        <field name="surface_uom_categ" />
-                        <field name="weight_uom_categ" />
-                        <field name="cattype" />
-                        <field name="length_uom" />
-                        <field name="surface_uom" />
-                        <field name="weight_uom" />
+                    <group>
+                        <group name="convention" string="Conventions">
+                            <field name="convention" />
+                            <field name="surface_formula" />
+                            <field name="weight_formula" />
+                        </group>
+                        <group name="type" string="Type">
+                            <field name="cattype" />
+                        </group>
+                        <group name="unites" string="Unites">
+                           
+                            <field name="length_uom_categ" invisible="1" />
+                            <field name="surface_uom_categ" invisible="1"/>
+                            <field name="weight_uom_categ" invisible="1"/>
+                            
+                            <label for="length_uom"/>
+                            <div>
+                                <field name="length_uom" />
+                            </div>
+                            
+                            <label for="surface_uom"/>
+                            <div>
+                                <field name="surface_uom" />
+                            </div>
+                            
+                            <label for="weight_uom"/>
+                            <div>
+                                <field name="weight_uom" />
+                            </div>
+                        </group>
                     </group>
                 </xpath>
             </field>
