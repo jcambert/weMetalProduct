@@ -2,6 +2,7 @@ from odoo import models, fields, api,_
 from ast import literal_eval as _literal_eval
 from . import models as _inner_models
 from .we_settings import SHEETMETAL_CATEGORY, UOM_SURFACE,UOM_WEIGHT,UOM_LENGTH,UOM_VOLUMIC_MASS
+from . import models as _inner_models
 import logging
 import re
 import math
@@ -28,7 +29,11 @@ class Model(models.AbstractModel):
     _abstract = False           # not abstract
     _transient = False          # not transient
 
-    _models=_inner_models
+    _models= _inner_models
+    # @classmethod
+    # def _build_model(self, pool, cr):
+    #     super(models.AbstractModel,self)._build_model(pool,cr)
+    #     self._models.update(_inner_models)
     def get_param(self,key):
         return literal_eval( self.env['ir.config_parameter'].get_param(key) or False)
 

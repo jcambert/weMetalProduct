@@ -6,6 +6,11 @@
             <field name="model">product.category</field>
             <field name="inherit_id" ref="product.product_category_form_view"/>
             <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <button string="Update product weight" name="update_product_weight" type="object"  confirm="Are you sure you want to recalculate weight?"/>
+                    </header>
+                </xpath>
                 <xpath expr="//sheet" position="inside">
                     <group>
                         <group name="convention" string="Conventions">
@@ -15,23 +20,24 @@
                         </group>
                         <group name="type" string="Type">
                             <field name="cattype" />
+                            <field name="protype" attrs="{'invisible':[('cattype','!=','profile')]}"/>
                         </group>
                         <group name="unites" string="Unites">
-                           
+
                             <field name="length_uom_categ" invisible="1" />
                             <field name="surface_uom_categ" invisible="1"/>
                             <field name="weight_uom_categ" invisible="1"/>
-                            
+
                             <label for="length_uom"/>
                             <div>
                                 <field name="length_uom" />
                             </div>
-                            
+
                             <label for="surface_uom"/>
                             <div>
                                 <field name="surface_uom" />
                             </div>
-                            
+
                             <label for="weight_uom"/>
                             <div>
                                 <field name="weight_uom" />

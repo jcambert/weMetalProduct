@@ -1,3 +1,5 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
 access_we_material,we product user,model_we_material,mrp.group_mrp_manager,1,1,1,1
 access_we_tag,we product user,model_we_tag,mrp.group_mrp_manager,1,1,1,1
+access_we_profile,we product user,model_we_profile,mrp.group_mrp_manager,1,1,1,1
+access_we_profile_type,we product user,model_we_profile_type,mrp.group_mrp_manager,1,1,1,1

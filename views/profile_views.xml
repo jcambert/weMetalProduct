@@ -4,16 +4,16 @@
             <field name="name">weMetalProduct.profile.list.view</field>
             <field name="model">we.profile</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree editable="bottom">
                     <field name="name" />
-                    <field name="type_id" />
+                    <field name="protype" />
+                    <field name="weight_per_length" />
+                    <field name="surface_per_length" />
                     <field name="surface_section" />
-                    <field name="surface_meter" />
-                    <field name="weight_meter" />
                 </tree>
             </field>
         </record>
-        <record id="we_product_profile_form_view" model="ir.ui.view">
+        <!-- <record id="we_product_profile_form_view" model="ir.ui.view">
             <field name="name">weMetalProduct.profile.form.view</field>
             <field name="model">we.profile</field>
             <field name="arch" type="xml">
@@ -36,12 +36,12 @@
                     </sheet>
                 </form>
             </field>
-        </record>
+        </record> -->
 
         <record id="we_profile_action" model="ir.actions.act_window">
             <field name="name">Profile</field>
             <field name="res_model">we.profile</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree</field>
         </record>
     </data>
 </odoo>

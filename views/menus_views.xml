@@ -2,6 +2,6 @@
 <odoo>
     <!-- <menuitem id="menu_we_indice" action="we_indice_action_none" parent="mrp.menu_mrp_bom" name="Indice" sequence="3"/>  -->
     <menuitem id="menu_we_material" action="we_material_action" parent="mrp.menu_mrp_configuration" name="Materials" sequence="997"/> 
-    <!-- <menuitem id="menu_we_profile" action="we_profile_action" parent="mrp.menu_mrp_configuration" name="Profiles" sequence="998"/> 
-    <menuitem id="menu_we_profile_type" action="we_profile_type_action" parent="mrp.menu_mrp_configuration" name="Profile Type" sequence="999"/>  -->
+    <menuitem id="menu_we_profile" action="we_profile_action" parent="mrp.menu_mrp_configuration" name="Profiles" sequence="998"/> 
+    <menuitem id="menu_we_profile_type" action="we_profile_type_action" parent="mrp.menu_mrp_configuration" name="Profile Type" sequence="999"/> 
 </odoo>

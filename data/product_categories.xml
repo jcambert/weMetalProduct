@@ -35,6 +35,7 @@
             <field name="surface_formula">(math.pi*width*length)/1000</field>
             <field name="weight_formula">length*((width-thickness)*thickness*math.pi*volmass)/1000</field>
             <field name="cattype">profile</field>
+            <field name="protype" >calculated</field>
             <field name="length_uom" ref="weMetalProduct.product_uom_mm" />
             <field name="surface_uom" ref="weMetalProduct.product_uom_square_meter"/>
             <field name="weight_uom" ref="uom.product_uom_kgm"/>
@@ -46,6 +47,7 @@
             <field name="surface_formula">(4*width*length)/1000</field>
             <field name="weight_formula">length*((width**2) -((width-2*thickness)**2) )*volmass/1000000</field>
             <field name="cattype">profile</field>
+            <field name="protype" >calculated</field>
             <field name="length_uom" ref="weMetalProduct.product_uom_mm" />
             <field name="surface_uom" ref="weMetalProduct.product_uom_square_meter"/>
             <field name="weight_uom" ref="uom.product_uom_kgm"/>
@@ -57,7 +59,19 @@
             <field name="surface_formula">2*(height*width*length)/1000</field>
             <field name="weight_formula">length*((width*height) -((width-2*thickness)*(height-2*thickness)) )*volmass/1000000</field>
             <field name="cattype">profile</field>
+            <field name="protype" >calculated</field>
             <field name="length_uom" ref="weMetalProduct.product_uom_mm" />
+            <field name="surface_uom" ref="weMetalProduct.product_uom_square_meter"/>
+            <field name="weight_uom" ref="uom.product_uom_kgm"/>
+        </record>
+        <record forcecreate="True" model="product.category" id="product_category_pr_ipn">
+            <field name="parent_id" ref="product.product_category_all"/>
+            <field name="name">IPN</field>
+            <field name="convention" >^(?P&lt;name&gt;IPN)(?P&lt;value&gt;[0-9]*)(-(?P&lt;material&gt;\w*))*$</field>
+            <field name="cattype">profile</field>
+            <field name="protype" >standard</field>
+            
+            <field name="length_uom" ref="uom.product_uom_meter" />
             <field name="surface_uom" ref="weMetalProduct.product_uom_square_meter"/>
             <field name="weight_uom" ref="uom.product_uom_kgm"/>
         </record>
