@@ -161,6 +161,7 @@
         <xpath expr="//sheet" position="inside">
           <group>
             <group name="dimensions" string="Dimensions">
+              <field name="weight_per_length" invisible="1"/>
               <label for="length"/>
               <div class="o_row">
                 <field name="length"/>
@@ -175,6 +176,11 @@
               <div class="o_row">
                 <field name="thickness"/>
                 <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
+              </div>
+              <label for="weight"/>
+              <div class="o_row">
+                <field name="weight"/>
+                <field name="weight_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
               </div>
             </group>
           </group>

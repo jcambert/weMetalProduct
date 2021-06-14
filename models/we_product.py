@@ -9,7 +9,7 @@ import math
 import sys
 _logger = logging.getLogger(__name__)
 
-def compute_sheetmetal_weight(length,width,thickness,volmass,w_formula):
+def compute_formula_weight(w_formula,*kargs):
     weight=0
     try:
         w_code=compile(w_formula, "<string>", "eval")
@@ -18,67 +18,10 @@ def compute_sheetmetal_weight(length,width,thickness,volmass,w_formula):
         _logger.warning('an error occur while calculating weight\n',sys.exc_info()[0])
     finally:
         return weight
-class WeProductCategory(Model):
-    
-    _inherit='product.category'
-    _models={'pdt':'product.product','pdttpl':'product.template'}
-    @tools.ormcache()
-    def _get_default_length_uom_categ(self):
-        # Deletion forbidden (at least through unlink)
-        return self.env.ref('uom.uom_categ_length')
-    @tools.ormcache()
-    def _get_default_surface_uom_categ(self):
-        # Deletion forbidden (at least through unlink)
-        result= self.env.ref('weMetalProduct.uom_categ_surface')
-        return result
-    @tools.ormcache()
-    def _get_default_weight_uom_categ(self):
-        # Deletion forbidden (at least through unlink)
-        result= self.env.ref('uom.product_uom_categ_kgm')
-        return result
-    surface_formula=fields.Char('Surface Formula',default='')
-    volume_formula=fields.Char('Volume Formula',default='')
-    weight_formula=fields.Char('Weight Formula',default='')
-    
-    convention=fields.Char('Convention',help="python regex string convention",default='')
-    cattype=fields.Selection([('none','None'),('sheetmetal','Sheetmetal'),('profile','Profile')],default='none',string='Type')
-    protype=fields.Selection([('none','None'),('standard','Standard'),('calculated','Calculated')],default='none',string="Profile",domain="[('cattype','=','profile')]")
-    
-    surface_uom=fields.Many2one('uom.uom','Surface Unit',required=True,domain="[('category_id','=',surface_uom_categ)]")
-    surface_uom_categ=fields.Many2one('uom.category',default=_get_default_surface_uom_categ,store=False,readonly=True)
-
-    length_uom=fields.Many2one('uom.uom','Length Unit',required=True,domain="[('category_id','=',length_uom_categ)]")
-    length_uom_categ=fields.Many2one('uom.category',default=_get_default_length_uom_categ,store=False,readonly=True)
-
-
-    weight_uom =fields.Many2one('uom.uom','Weight Unit',required=True,domain="[('category_id','=',weight_uom_categ)]")
-    weight_uom_categ=fields.Many2one('uom.category',default=_get_default_weight_uom_categ,store=False,readonly=True)
-
-    def update_product_weight(self):
-        self.ensure_one()
-        products = self.env['product.template'].search([('categ_id', 'child_of', self.ids)])
-        for product in products:
-            product.calculate_weight()
-        title = _("Update product's weight!")
-        message = _("Everything seems properly fine!")
-        return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': title,
-                'message': message,
-                'sticky': False,
-            }
-        }
-    @api.model
-    def parse(self,convention,value,results):
-        p = re.compile(convention,re.IGNORECASE)
-        m = p.match(value)
-        if m:
-            if isinstance(results,dict):
-                results.update(m.groupdict())
-            return True
-        return False
+def compute_standard_weight(length,weight_per_length):
+    return length*weight_per_length
+def compute_profile_calculated_weight():
+    pass    
 class WeProductTemplate(Model):
     _inherit = ['product.template']
     _description = 'Product Metal Template'
@@ -231,10 +174,12 @@ class WeProductTemplate(Model):
             # s_code, w_code=compile(s_formula, "<string>", "eval"),compile(w_formula, "<string>", "eval")
             # record.surface, record.weight=float(eval(s_code)),float(eval(w_code))
             if record.cattype=='sheetmetal':
-                record.weight= compute_sheetmetal_weight(record.length,record.width,record.thickness,record.material.volmass,record.categ_id.weight_formula)
+                record.weight= compute_formula_weight(record.categ_id.weight_formula,length=record.length,width=record.width,thickness=record.thickness,volmass=record.material.volmass)
+            elif record.cattype=='profile' and record.protype=='calculated':
+                record.weight=compute_formula_weight(record.categ_id.weight_formula,width=record.width,height=record.height,thickness=record.thickness,volmass=record.volmass)
             elif record.cattype=='profile' and record.protype=='standard':
-                record.weight=record.length*record.weight_per_length                
-        print('toto')
+                record.weight=compute_standard_weight( record.length,record.weight_per_length)
+        
 
     @api.onchange('length','width','height','thickness','material')
     def compute_weight(self):
@@ -282,13 +227,18 @@ class WeProductProduct(Model):
     thickness=fields.Float(related='product_tmpl_id.thickness',string='Thickness',store=True)
     material= fields.Many2one('we.material',related='product_tmpl_id.material')
     surface=fields.Float('Surface', digits='Product Unit of Measure',default=0.0)
+    weight_per_length=fields.Float('Weight per Unit Length')
     @api.depends('product_template_attribute_value_ids','product_tmpl_id.name','product_tmpl_id.categ_id')
     def _compute_size(self):
         for product in self:
             # indices = product.product_template_attribute_value_ids._ids2str()
             # print(product.product_template_attribute_value_ids.attribute_id)
             # print(product.product_template_attribute_value_ids.product_attribute_value_id)
-            if product.product_template_attribute_value_ids.attribute_id.display_type=='sheetmetalsize':
+
+            #  if record.cattype=='sheetmetal':
+            # elif record.cattype=='profile' and record.protype=='calculated':
+            # elif record.cattype=='profile' and record.protype=='standard':
+            if product.product_tmpl_id.cattype=='sheetmetal' and product.product_template_attribute_value_ids.attribute_id.display_type=='sheetmetalsize':
                 product.default_code=product.product_tmpl_id.name + product.product_template_attribute_value_ids.product_attribute_value_id.code_suffixe
                 product.length=product.product_template_attribute_value_ids.product_attribute_value_id.length
                 product.width=product.product_template_attribute_value_ids.product_attribute_value_id.width
@@ -296,17 +246,24 @@ class WeProductProduct(Model):
                 s_formula, v_formula, w_formula=product.categ_id.surface_formula,product.categ_id.volume_formula,product.categ_id.weight_formula
                 s_code=compile(s_formula, "<string>", "eval")
                 v_code=compile(v_formula, "<string>", "eval")
-                w_code=compile(w_formula, "<string>", "eval")
-                product.surface,product.volume, product.weight=float(eval(s_code)),float(eval(v_code)),float(eval(w_code))
-                product.weight=compute_sheetmetal_weight(product.length,product.width,product.thickness,product.material.volmass,product.categ_id.weight_formula)
-            elif product.product_template_attribute_value_ids.attribute_id.display_type=='profilelength':
+                # w_code=compile(w_formula, "<string>", "eval")
+                # product.surface,product.volume, product.weight=float(eval(s_code)),float(eval(v_code)),float(eval(w_code))
+                product.surface,product.volume=float(eval(s_code)),float(eval(v_code))
+                product.weight=compute_formula_weight(product.categ_id.weight_formula,product.length,product.width,product.thickness,product.material.volmass)
+            elif product.product_tmpl_id.cattype=='profile' and product.product_tmpl_id.protype=='calculated' and product.product_template_attribute_value_ids.attribute_id.display_type=='profilelength':
                 product.default_code=product.product_tmpl_id.name + product.product_template_attribute_value_ids.product_attribute_value_id.code_suffixe
                 product.length=product.product_template_attribute_value_ids.product_attribute_value_id.length
                 product.width=product.product_tmpl_id.width
-                length,width,height,thickness,volmass=product.length,product.width,product.height,product.thickness,product.material.volmass
+                # length,width,height,thickness,volmass=product.length,product.width,product.height,product.thickness,product.material.volmass
                 w_formula=product.categ_id.weight_formula
-                if w_formula and len(w_formula)>0:
-                    w_code=compile(w_formula, "<string>", "eval")
-                    product.weight=float(eval(w_code))
+                # if w_formula and len(w_formula)>0:
+                #     w_code=compile(w_formula, "<string>", "eval")
+                #     product.weight=float(eval(w_code))
+                product.weight=compute_formula_weight(w_formula,width=product.width,height=product.height,thickness=product.thickness,volmass=product.volmass)
+            elif product.product_tmpl_id.cattype=='profile' and product.product_tmpl_id.protype=='standard' and product.product_template_attribute_value_ids.attribute_id.display_type=='profilelength':
+                product.default_code=product.product_tmpl_id.name + product.product_template_attribute_value_ids.product_attribute_value_id.code_suffixe
+                product.length=product.product_template_attribute_value_ids.product_attribute_value_id.length
+                product.weight_per_length=product.product_tmpl_id.weight_per_length
+                product.weight=compute_standard_weight(product.length,product.weight_per_length)
             else:
                 product.length=0.0
