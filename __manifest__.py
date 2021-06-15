@@ -21,7 +21,7 @@
     'category': 'Productivity',
     'version': '1.0',
     # any module necessary for this one to work correctly
-    'depends': ['base','mrp','product',  'uom'],
+    'depends': ['base','mrp','product',  'uom','website'],
 
     # always loaded
     'data': [
@@ -39,6 +39,7 @@
         'views/product_attribute_views.xml',
         'views/product_category_views.xml',
         'views/menus_views.xml',
+        'views/assets.xml',
         'data/uom.xml',
         'data/product_categories.xml',
         'data/materials.xml',
