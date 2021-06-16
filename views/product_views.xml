@@ -83,18 +83,22 @@
                   <label for="length">Longueur</label>
                   <div>
                     <field name="length" />
+                    <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
                   </div>
                   <label for="width">Largeur</label>
                   <div>
                     <field name="width" />
+                    <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
                   </div>
                   <label for="height">Hauteur</label>
                   <div>
                     <field name="height" />
+                    <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
                   </div>
                   <label for="thickness">Epaisseur</label>
                   <div>
                     <field name="thickness" />
+                    <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
                   </div>
                 </group>
                 <group string="Dimensions Tole" attrs="{'invisible': ['|',  ('product_variant_count', '>',1),('cattype','!=','sheetmetal')]}">
@@ -140,7 +144,7 @@
       <field name="arch" type="xml">
         <xpath expr="//group[@name='weight']" position="replace">
           <group name="weight" string="Logistique" attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}">
-
+            <field name="material" />
             <label for="surface"/>
             <div class="o_row">
               <field name="surface"/>
@@ -165,6 +169,11 @@
               <label for="length"/>
               <div class="o_row">
                 <field name="length"/>
+                <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
+              </div>
+               <label for="height"/>
+              <div class="o_row">
+                <field name="height"/>
                 <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
               </div>
               <label for="width"/>

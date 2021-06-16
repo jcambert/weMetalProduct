@@ -31,7 +31,7 @@
         <record forcecreate="True" model="product.category" id="product_category_pr_turo">
             <field name="parent_id" ref="product.product_category_all"/>
             <field name="name">Tube Rond</field>
-            <field name="convention">^(?P&lt;name&gt;TURO*)-(?P&lt;width&gt;[0-9]*)x(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;material&gt;[a-z]*)$</field>
+            <field name="convention">^(?P&lt;name&gt;TURO*)-(?P&lt;width&gt;[0-9]*)x(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;material&gt;[a-z]*)(\+(?P&lt;finition&gt;\w*))*\w*$</field>
             <field name="surface_formula">(math.pi*width*length)/1000</field>
             <field name="weight_formula">length*((width-thickness)*thickness*math.pi*volmass)/1000</field>
             <field name="cattype">profile</field>
@@ -43,7 +43,7 @@
         <record forcecreate="True" model="product.category" id="product_category_pr_tuca">
             <field name="parent_id" ref="product.product_category_all"/>
             <field name="name">Tube Carré</field>
-            <field name="convention">^(?P&lt;name&gt;TUCA*)-(?P&lt;width&gt;[0-9]*)x(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;material&gt;[a-z]*)$</field>
+            <field name="convention">^(?P&lt;name&gt;TUCA*)-(?P&lt;width&gt;[0-9]*)x(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;material&gt;[a-z]*)(\+(?P&lt;finition&gt;\w*))*\w*$</field>
             <field name="surface_formula">(4*width*length)/1000</field>
             <field name="weight_formula">length*((width**2) -((width-2*thickness)**2) )*volmass/1000000</field>
             <field name="cattype">profile</field>
@@ -55,7 +55,7 @@
         <record forcecreate="True" model="product.category" id="product_category_pr_ture">
             <field name="parent_id" ref="product.product_category_all"/>
             <field name="name">Tube Rect</field>
-            <field name="convention">^(?P&lt;name&gt;TURE*)-(?P&lt;width&gt;[0-9]*)x(?P&lt;height&gt;[0-9]*)x(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;material&gt;[a-z]*)$</field>
+            <field name="convention">^(?P&lt;name&gt;TURE*)-(?P&lt;width&gt;[0-9]*)x(?P&lt;height&gt;[0-9]*)x(?P&lt;thickness&gt;[0-9\.]*)(?P&lt;material&gt;[a-z]*)(\+(?P&lt;finition&gt;\w*))*\w*$</field>
             <field name="surface_formula">2*(height*width*length)/1000</field>
             <field name="weight_formula">length*((width*height) -((width-2*thickness)*(height-2*thickness)) )*volmass/1000000</field>
             <field name="cattype">profile</field>

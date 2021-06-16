@@ -3,6 +3,7 @@ from ast import literal_eval as _literal_eval
 from . import models as _inner_models
 from .we_settings import SHEETMETAL_CATEGORY, UOM_SURFACE,UOM_WEIGHT,UOM_LENGTH,UOM_VOLUMIC_MASS
 from . import models as _inner_models
+import sys
 import logging
 import re
 import math
@@ -39,10 +40,14 @@ class Model(models.AbstractModel):
 
     def __getattr__(self,key):
         # print(key)
-        if isinstance(key,str) and key in self._models:
-            return self.env[self._models[key]]
-        res =super().__getattr__(key)
-        return res
+        try:
+            if isinstance(key,str) and key in self._models:
+                return self.env[self._models[key]]
+            res =super(models.AbstractModel,self).__getattr__(key)
+        except AttributeError as ex:
+            print(ex)
+            print(key)
+
 
     def map(self,fn):
         return map(fn,self)

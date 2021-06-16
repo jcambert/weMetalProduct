@@ -1,6 +1,10 @@
 $o-community-color: green; 
 $o-enterprise-color: #875A7B;
 $o-enterprise-primary-color: #00A09D;
+
+$o-brand-odoo: $o-community-color;
+$o-brand-primary: $o-community-color;
+
 $o-color-palettes: (
     (
         'o-color-1': #85AFA8,
