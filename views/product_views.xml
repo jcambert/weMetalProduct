@@ -30,6 +30,9 @@
       <field name="inherit_id" ref="product.product_template_form_view"/>
       <field name="arch" type="xml">
         <data>
+          <xpath expr="//header" position="inside">
+            <button string="Update Weights" type="object" groups="mrp.group_mrp_manager" name="action_update_weight" attrs="{'invisible': ['|',('type', '!=', 'product'),'&amp;',('product_variant_count','>',1),('protype','!=','calculated')]}"/>
+          </xpath>
           <notebook position="inside">
             <page name="we_product_profile" string="Dimensions">
               <group >
@@ -142,6 +145,10 @@
       <field name="model">product.product</field>
       <field name="inherit_id" ref="product.product_variant_easy_edit_view"/>
       <field name="arch" type="xml">
+        <xpath expr="//header" position="inside">
+          <field name="protype" invisible="1"/>
+          <button string="Update Weight" type="object" groups="mrp.group_mrp_manager" name="action_update_weight" attrs="{'invisible': ['|',('type', '!=', 'product'),('protype','!=','calculated')]}"/>
+        </xpath>
         <xpath expr="//group[@name='weight']" position="replace">
           <group name="weight" string="Logistique" attrs="{'invisible':[('type', 'not in', ['product', 'consu'])]}">
             <field name="material" />
@@ -171,7 +178,7 @@
                 <field name="length"/>
                 <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
               </div>
-               <label for="height"/>
+              <label for="height"/>
               <div class="o_row">
                 <field name="height"/>
                 <field name="length_uom" nolabel="1" class="oe_inline" style="margin-left:5px"/>
